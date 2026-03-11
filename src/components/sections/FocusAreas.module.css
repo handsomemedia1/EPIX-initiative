@@ -1,0 +1,159 @@
+.focusAreas {
+    padding: var(--spacing-3xl) 0;
+    background: var(--color-white);
+}
+
+.container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+}
+
+.header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+}
+
+.label {
+    display: inline-block;
+    padding: 0.4rem 1.1rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    background: rgba(0, 200, 83, 0.08);
+    border: 1px solid rgba(0, 200, 83, 0.18);
+    border-radius: var(--radius-full);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: var(--spacing-sm);
+}
+
+.title {
+    font-size: clamp(1.85rem, 3.5vw, 2.5rem);
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-top: var(--spacing-xs);
+    max-width: 550px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cardsContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+}
+
+.card {
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
+    position: relative;
+    transition: all var(--transition-normal);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-6px);
+}
+
+.cardInner {
+    padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-lg);
+}
+
+.iconWrapper {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-md);
+    color: var(--accent-color, var(--color-primary));
+    background: color-mix(in srgb, var(--accent-color, var(--color-primary)) 10%, white);
+}
+
+.statBadge {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.4rem 0.9rem;
+    border-radius: var(--radius-md);
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.statValue {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--color-white);
+}
+
+.statLabel {
+    font-size: 0.55rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.cardTitle {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-xs);
+}
+
+.cardDescription {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-md);
+}
+
+.cardLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.cardLink:hover {
+    color: var(--color-primary-dark);
+}
+
+.cornerDecor {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    border-bottom: 3px solid;
+    border-left: 3px solid;
+    border-radius: 0 0 0 var(--radius-xl);
+    opacity: 0.15;
+    transition: opacity var(--transition-normal);
+}
+
+.card:hover .cornerDecor {
+    opacity: 0.4;
+}
+
+@media (max-width: 900px) {
+    .cardsContainer {
+        grid-template-columns: 1fr;
+    }
+}
