@@ -2,8 +2,11 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { ArrowRight, Activity, Database, Users } from 'lucide-react';
 import dynamic from 'next/dynamic';
+import SpotlightCard from '../components/ui/SpotlightCard';
+import AnimatedCounter from '../components/ui/AnimatedCounter';
 import styles from './page.module.css';
 
 // Dynamically import the 3D component to avoid SSR issues with WebGL
@@ -12,6 +15,11 @@ const Hero3DElement = dynamic(() => import('../components/ui/Hero3DElement'), { 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+};
+
+const cinematicScale = {
+  hidden: { opacity: 0, scale: 0.95 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 1.2, ease: "circOut" } }
 };
 
 const staggerContainer = {
@@ -23,6 +31,7 @@ const staggerContainer = {
 };
 
 export default function Home() {
+  const [hoveredFocus, setHoveredFocus] = useState(null);
   return (
     <div className={styles.homeWrapper}>
 
@@ -98,9 +107,11 @@ export default function Home() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            variants={fadeUp}
+            variants={cinematicScale}
           >
-            <h2 className={styles.formulaTitle}>Education + Data + Research = Impact</h2>
+            <h2 className={styles.formulaTitle} style={{ background: 'linear-gradient(90deg, #10B981, #3B82F6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', display: 'inline-block' }}>
+              Education + Data + Research = Impact
+            </h2>
             <p className={styles.formulaBody}>
               Africa carries over 24% of the global disease burden but produces less than 2% of the world's health research. The gap is not in talent. It is in infrastructure. EPIX Initiative trains researchers, runs community-based studies, and develops digital health tools designed specifically for the Nigerian context. We do not import solutions. We build them here.
             </p>
@@ -130,25 +141,31 @@ export default function Home() {
             viewport={{ once: true }}
             variants={staggerContainer}
           >
-            <motion.div variants={fadeUp} className={`glass-card ${styles.engineCard}`}>
-              <Database size={32} className={styles.cardIcon} />
-              <h3>EPIX Research Lab</h3>
-              <p>We design and conduct community-based health studies, produce peer-reviewed publications, and develop digital health tools built directly from our research findings. Every project runs a complete cycle from identifying the problem to deploying the solution.</p>
-              <Link href="/lab" className={styles.textLink}>Explore Our Lab <ArrowRight size={16} /></Link>
+            <motion.div variants={fadeUp}>
+              <SpotlightCard className={styles.engineCard}>
+                <Database size={32} className={styles.cardIcon} />
+                <h3>EPIX Research Lab</h3>
+                <p>We design and conduct community-based health studies, produce peer-reviewed publications, and develop digital health tools built directly from our research findings. Every project runs a complete cycle from identifying the problem to deploying the solution.</p>
+                <Link href="/lab" className={styles.textLink}>Explore Our Lab <ArrowRight size={16} /></Link>
+              </SpotlightCard>
             </motion.div>
 
-            <motion.div variants={fadeUp} className={`glass-card ${styles.engineCard}`}>
-              <Users size={32} className={styles.cardIcon} />
-              <h3>The Academy</h3>
-              <p>We train students and young health professionals with practical research skills. From data collection to scientific writing, every module is designed around one question: can you actually do this when the training ends? Fully online. Accessible across Nigeria.</p>
-              <Link href="/programs" className={styles.textLink}>Explore The Academy <ArrowRight size={16} /></Link>
+            <motion.div variants={fadeUp}>
+              <SpotlightCard className={styles.engineCard}>
+                <Users size={32} className={styles.cardIcon} />
+                <h3>The Academy</h3>
+                <p>We train students and young health professionals with practical research skills. From data collection to scientific writing, every module is designed around one question: can you actually do this when the training ends? Fully online. Accessible across Nigeria.</p>
+                <Link href="/programs" className={styles.textLink}>Explore The Academy <ArrowRight size={16} /></Link>
+              </SpotlightCard>
             </motion.div>
 
-            <motion.div variants={fadeUp} className={`glass-card ${styles.engineCard}`}>
-              <Activity size={32} className={styles.cardIcon} />
-              <h3>Our Focus Areas</h3>
-              <p>We work at the intersection of Digital Health, Adolescent Health, and Non-Communicable Diseases. These are the areas where Nigeria's evidence gap is widest and where digital innovation has the most to offer.</p>
-              <Link href="/about" className={styles.textLink}>See Our Focus <ArrowRight size={16} /></Link>
+            <motion.div variants={fadeUp}>
+              <SpotlightCard className={styles.engineCard}>
+                <Activity size={32} className={styles.cardIcon} />
+                <h3>Our Focus Areas</h3>
+                <p>We work at the intersection of Digital Health, Adolescent Health, and Non-Communicable Diseases. These are the areas where Nigeria's evidence gap is widest and where digital innovation has the most to offer.</p>
+                <Link href="/about" className={styles.textLink}>See Our Focus <ArrowRight size={16} /></Link>
+              </SpotlightCard>
             </motion.div>
           </motion.div>
         </div>
@@ -181,7 +198,19 @@ export default function Home() {
               { name: 'Adolescent Health', desc: "Young people are 60% of Nigeria's population but largely invisible in health research and health systems. We are changing that.", tag: 'Active Projects' },
               { name: 'Non-Communicable Diseases', desc: "Hypertension, diabetes, and other NCDs are rising quietly across Nigeria. We are building the surveillance and management tools communities need.", tag: 'Coming Soon' },
             ].map((focus, index) => (
-              <motion.div key={index} variants={fadeUp} className={styles.focusItem}>
+              <motion.div 
+                key={index} 
+                variants={fadeUp} 
+                className={styles.focusItem}
+                onMouseEnter={() => setHoveredFocus(index)}
+                onMouseLeave={() => setHoveredFocus(null)}
+                animate={{
+                  opacity: hoveredFocus === null || hoveredFocus === index ? 1 : 0.4,
+                  scale: hoveredFocus === index ? 1.02 : 1,
+                  borderColor: hoveredFocus === index ? 'rgba(16, 185, 129, 0.4)' : 'rgba(255, 255, 255, 0.06)'
+                }}
+                transition={{ duration: 0.3 }}
+              >
                 <div className={styles.focusHeader}>
                   <h3>{focus.name}</h3>
                   <span className={styles.focusTag}>{focus.tag}</span>
@@ -222,7 +251,9 @@ export default function Home() {
               { number: '8', label: 'Publications and Outputs' },
             ].map((stat, index) => (
               <motion.div key={index} variants={fadeUp} className={styles.statItem}>
-                <span className={styles.statNumber}>{stat.number}</span>
+                <span className={styles.statNumber}>
+                  <AnimatedCounter value={stat.number} />
+                </span>
                 <span className={styles.statLabel}>{stat.label}</span>
               </motion.div>
             ))}
