@@ -1,6 +1,6 @@
 .getInvolved {
     padding: var(--spacing-3xl) 0;
-    background: var(--color-bg-alt);
+    background: var(--color-primary);
     position: relative;
     overflow: hidden;
 }
@@ -23,24 +23,25 @@
     padding: 0.4rem 1.1rem;
     font-size: 0.8rem;
     font-weight: 700;
-    color: var(--color-accent);
-    background: rgba(255, 179, 0, 0.08);
-    border: 1px solid rgba(255, 179, 0, 0.18);
+    color: var(--color-primary);
+    background: var(--color-white);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: var(--radius-full);
     text-transform: uppercase;
     letter-spacing: 0.12em;
     margin-bottom: var(--spacing-sm);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
 .title {
     font-size: clamp(1.85rem, 3.5vw, 2.5rem);
     font-weight: 800;
-    color: var(--text-primary);
+    color: var(--color-white);
 }
 
 .subtitle {
     font-size: 1rem;
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.8);
     margin-top: var(--spacing-xs);
 }
 
@@ -67,18 +68,19 @@
 }
 
 .primaryCard {
-    background: var(--color-primary);
-    border-color: var(--color-primary);
+    background: var(--color-navy);
+    border-color: var(--color-navy);
     color: white;
 }
 
 .primaryCard:hover {
-    border-color: var(--color-primary-dark);
+    border-color: var(--color-navy-light);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
 .primaryCard .iconWrapper {
-    background: rgba(255, 255, 255, 0.2);
-    color: var(--color-white);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--color-primary-light);
 }
 
 .primaryCard .cardTitle,
@@ -87,12 +89,14 @@
 }
 
 .primaryCard .cardButton {
-    background: var(--color-white);
-    color: var(--color-primary-dark);
+    background: var(--color-primary);
+    color: var(--color-white);
 }
 
 .primaryCard .cardButton:hover {
     box-shadow: var(--shadow-md);
+    background: var(--color-primary-light);
+    color: var(--color-navy);
 }
 
 .iconWrapper {
@@ -149,7 +153,7 @@
     width: 300px;
     height: 300px;
     border-radius: 50%;
-    background: rgba(0, 200, 83, 0.04);
+    background: rgba(255, 255, 255, 0.08);
     pointer-events: none;
     z-index: 1;
 }

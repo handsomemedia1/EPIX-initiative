@@ -1,12 +1,28 @@
 .arcFramework {
-    padding: var(--spacing-3xl) 0;
-    background: var(--color-bg-alt);
+    padding: 0 0 var(--spacing-3xl) 0;
+    position: relative;
+    background-image: url('/images/bg_3d_light.png');
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+.arcFramework::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(241, 245, 251, 0.4) 0%, rgba(241, 245, 251, 0.95) 100%);
+    pointer-events: none;
+    z-index: 1;
 }
 
 .container {
     max-width: var(--container-max);
     margin: 0 auto;
     padding: 0 var(--container-padding);
+    position: relative;
+    z-index: 2;
 }
 
 .header {
@@ -52,10 +68,12 @@
 }
 
 .card {
-    background: var(--color-white);
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-sm);
-    border: 1px solid var(--color-border);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.8);
     overflow: hidden;
     position: relative;
     transition: all var(--transition-normal);

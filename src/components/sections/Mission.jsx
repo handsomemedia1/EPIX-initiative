@@ -5,9 +5,9 @@ import { motion, useInView } from 'framer-motion';
 import styles from './Mission.module.css';
 
 const formulaItems = [
-    { label: 'Education', icon: '🎓', description: 'Practical, skills-based training' },
-    { label: 'Data', icon: '📊', description: 'Primary data collection & analysis' },
-    { label: 'Research', icon: '🔬', description: 'Evidence-driven studies' },
+    { label: 'Education', icon: '🎓', description: 'Practical, skills-based training', color: 'rgba(0, 191, 165, 0.15)', textCol: '#00BFA5' },
+    { label: 'Data', icon: '📊', description: 'Primary data collection & analysis', color: 'rgba(255, 179, 0, 0.15)', textCol: '#FFB300' },
+    { label: 'Research', icon: '🔬', description: 'Evidence-driven studies', color: 'rgba(57, 73, 171, 0.15)', textCol: '#3949AB' },
 ];
 
 export default function Mission() {
@@ -16,91 +16,49 @@ export default function Mission() {
 
     return (
         <section className={styles.mission} id="mission" ref={ref}>
+            {/* Ambient Background Elements */}
+            <div className={styles.bgGlow}></div>
+            
+            {/* Animated Data Nodes Background */}
+            <div className={styles.nodesContainer}>
+                {[...Array(15)].map((_, i) => (
+                    <motion.div 
+                        key={i}
+                        className={styles.node}
+                        style={{
+                            left: `${Math.random() * 100}%`,
+                            top: `${Math.random() * 100}%`,
+                            width: `${Math.random() * 8 + 4}px`,
+                            height: `${Math.random() * 8 + 4}px`,
+                        }}
+                        animate={{
+                            y: [0, -30, 0],
+                            opacity: [0.2, 0.6, 0.2]
+                        }}
+                        transition={{
+                            duration: Math.random() * 4 + 4,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: Math.random() * 2
+                        }}
+                    >
+                        <div className={styles.nodeCore}></div>
+                        <div className={styles.nodeRipple}></div>
+                    </motion.div>
+                ))}
+            </div>
+
             <div className={styles.container}>
-                {/* Animated Formula Header */}
+                
+                {/* Section Header */}
                 <motion.div
                     className={styles.header}
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 20 }}
                     animate={isInView ? { opacity: 1, y: 0 } : {}}
                     transition={{ duration: 0.6 }}
                 >
-                    <div className={styles.formula}>
-                        {formulaItems.map((item, index) => (
-                            <motion.div
-                                key={item.label}
-                                className={styles.formulaItem}
-                                initial={{ opacity: 0, scale: 0.5, rotateY: -90 }}
-                                animate={isInView ? { opacity: 1, scale: 1, rotateY: 0 } : {}}
-                                transition={{
-                                    duration: 0.5,
-                                    delay: 0.2 + index * 0.15,
-                                    type: 'spring',
-                                    stiffness: 100,
-                                }}
-                                whileHover={{ scale: 1.1, rotateY: 10 }}
-                            >
-                                <span className={styles.word}>{item.label}</span>
-                            </motion.div>
-                        ))}
-
-                        {/* Plus signs */}
-                        <motion.span
-                            className={styles.operator}
-                            style={{ position: 'absolute', left: 'calc(33% - 10px)' }}
-                            animate={isInView ? {
-                                scale: [1, 1.3, 1],
-                                rotate: [0, 180, 360],
-                            } : {}}
-                            transition={{ duration: 2, repeat: Infinity, delay: 1 }}
-                        >
-                            +
-                        </motion.span>
-                        <motion.span
-                            className={styles.operator}
-                            style={{ position: 'absolute', left: 'calc(66% - 10px)' }}
-                            animate={isInView ? {
-                                scale: [1, 1.3, 1],
-                                rotate: [0, 180, 360],
-                            } : {}}
-                            transition={{ duration: 2, repeat: Infinity, delay: 1.2 }}
-                        >
-                            +
-                        </motion.span>
-                    </div>
-
-                    {/* Equals Impact */}
-                    <motion.div
-                        className={styles.equalsSection}
-                        initial={{ opacity: 0, x: 50 }}
-                        animate={isInView ? { opacity: 1, x: 0 } : {}}
-                        transition={{ duration: 0.6, delay: 0.8 }}
-                    >
-                        <motion.span
-                            className={styles.equals}
-                            animate={isInView ? { scale: [1, 1.2, 1] } : {}}
-                            transition={{ duration: 1.5, repeat: Infinity, delay: 1.5 }}
-                        >
-                            =
-                        </motion.span>
-                        <motion.span
-                            className={styles.impact}
-                            whileHover={{
-                                scale: 1.1,
-                                textShadow: '0 0 30px rgba(0, 200, 83, 0.5)',
-                            }}
-                        >
-                            Impact
-                        </motion.span>
-                    </motion.div>
-                </motion.div>
-
-                {/* Content */}
-                <motion.div
-                    className={styles.content}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.6, delay: 0.4 }}
-                >
+                    <span className={styles.label}>Our Core Formula</span>
+                    <h2 className={styles.title}>How We Build <span className={styles.highlight}>The Future</span></h2>
                     <p className={styles.description}>
                         We don&apos;t just teach theory—we build the researchers Africa is missing.
                         Our fellows master data collection, conduct real studies that generate the
@@ -108,65 +66,97 @@ export default function Mission() {
                     </p>
                 </motion.div>
 
-                {/* Interactive Visual Cards */}
-                <motion.div
-                    className={styles.visualGrid}
-                    initial={{ opacity: 0 }}
-                    animate={isInView ? { opacity: 1 } : {}}
-                    transition={{ duration: 0.6, delay: 0.6 }}
-                >
-                    {formulaItems.map((item, index) => (
-                        <motion.div
-                            key={item.label}
-                            className={styles.visualCard}
-                            initial={{ opacity: 0, y: 40, rotateX: -15 }}
-                            animate={isInView ? { opacity: 1, y: 0, rotateX: 0 } : {}}
-                            transition={{
-                                duration: 0.5,
-                                delay: 0.7 + index * 0.1,
-                                ease: [0.22, 1, 0.36, 1],
-                            }}
-                            whileHover={{
-                                y: -10,
-                                scale: 1.05,
-                                rotateY: 5,
-                                boxShadow: '15px 15px 30px rgba(0,0,0,0.15), -10px -10px 25px rgba(255,255,255,0.95)',
-                            }}
-                            style={{ transformStyle: 'preserve-3d' }}
-                        >
-                            <motion.div
-                                className={styles.iconWrapper}
-                                whileHover={{ scale: 1.2, rotate: 10 }}
-                            >
-                                <span className={styles.emoji}>{item.icon}</span>
-                            </motion.div>
-                            <h4>{item.label}</h4>
-                            <p>{item.description}</p>
-                        </motion.div>
-                    ))}
-
-                    {/* Impact Card (Special) */}
-                    <motion.div
-                        className={`${styles.visualCard} ${styles.impactCard}`}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                        transition={{ duration: 0.5, delay: 1, type: 'spring' }}
-                        whileHover={{
-                            scale: 1.05,
-                            boxShadow: '0 20px 40px rgba(0, 200, 83, 0.3)',
-                        }}
+                {/* The Interactive Formula */}
+                <div className={styles.formulaLayout}>
+                    
+                    {/* Left: The Inputs */}
+                    <motion.div 
+                        className={styles.inputsBlock}
+                        initial={{ opacity: 0, x: -30 }}
+                        animate={isInView ? { opacity: 1, x: 0 } : {}}
+                        transition={{ duration: 0.6, delay: 0.2 }}
                     >
-                        <motion.div
-                            className={styles.iconWrapper}
-                            animate={{ rotate: [0, 10, -10, 0] }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                        >
-                            <span className={styles.emoji}>🌍</span>
-                        </motion.div>
-                        <h4>Impact</h4>
-                        <p>Real change for communities</p>
+                        {formulaItems.map((item, index) => (
+                            <motion.div
+                                key={item.label}
+                                className={styles.inputCard}
+                                whileHover={{ scale: 1.02, x: 10 }}
+                                transition={{ type: 'spring', stiffness: 300 }}
+                            >
+                                <div className={styles.iconWrapper} style={{ background: item.color, color: item.textCol }}>
+                                    <span className={styles.emoji}>{item.icon}</span>
+                                </div>
+                                <div className={styles.inputContent}>
+                                    <div className={styles.inputHeader}>
+                                        <h4 style={{ color: item.textCol }}>{item.label}</h4>
+                                        {index < formulaItems.length - 1 && (
+                                            <span className={styles.plusSign}>+</span>
+                                        )}
+                                    </div>
+                                    <p>{item.description}</p>
+                                </div>
+                            </motion.div>
+                        ))}
                     </motion.div>
-                </motion.div>
+
+                    {/* Middle: Equals Sign connecting them */}
+                    <motion.div 
+                        className={styles.equalsBlock}
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                        transition={{ duration: 0.6, delay: 0.6, type: 'spring' }}
+                    >
+                        <div className={styles.equalsRing}>
+                            <motion.span 
+                                className={styles.equalsIcon}
+                                animate={{ scale: [1, 1.1, 1] }}
+                                transition={{ duration: 2, repeat: Infinity }}
+                            >=</motion.span>
+                        </div>
+                    </motion.div>
+
+                    {/* Right: The Output (Impact) */}
+                    <motion.div 
+                        className={styles.impactBlock}
+                        initial={{ opacity: 0, x: 30 }}
+                        animate={isInView ? { opacity: 1, x: 0 } : {}}
+                        transition={{ duration: 0.8, delay: 0.8 }}
+                    >
+                        <div className={styles.impactCard}>
+                            <motion.div 
+                                className={styles.impactGlow} 
+                                animate={{ opacity: [0.4, 0.8, 0.4] }}
+                                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                            />
+                            
+                            <motion.div
+                                className={styles.impactIconWrapper}
+                                animate={{ rotate: [0, 10, -10, 0] }}
+                                transition={{ duration: 4, repeat: Infinity }}
+                            >
+                                <span className={styles.emojiLg}>🌍</span>
+                            </motion.div>
+                            
+                            <h3 className={styles.impactTitle}>Global Impact</h3>
+                            <p className={styles.impactDesc}>
+                                Real change for communities. We turn educated fellows into 
+                                data-driven policymakers changing the landscape of African health.
+                            </p>
+                            
+                            <motion.button 
+                                className={styles.exploreBtn}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                See Our Work
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </motion.button>
+                        </div>
+                    </motion.div>
+
+                </div>
             </div>
         </section>
     );

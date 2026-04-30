@@ -8,14 +8,35 @@ import styles from './Loader.module.css';
 export default function Loader() {
   const [isLoading, setIsLoading] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [loadingText, setLoadingText] = useState('Initializing core systems');
+
+  const loadingMessages = [
+    'Initializing core systems',
+    'Syncing research databases',
+    'Loading EPIX academy modules',
+    'Establishing secure connections',
+    'Finalizing interface protocols'
+  ];
 
   useEffect(() => {
     let start = Date.now();
-    const duration = 1600; // 1.6s max
+    const minDuration = 3500; // Force at least 3.5 seconds
+    const maxDuration = 4500; // Absolute max
+
+    // Cycle through messages based on progress
+    const messageInterval = setInterval(() => {
+      setLoadingText(prev => {
+        const currentIndex = loadingMessages.indexOf(prev);
+        if (currentIndex < loadingMessages.length - 1) {
+          return loadingMessages[currentIndex + 1];
+        }
+        return prev;
+      });
+    }, 700);
 
     const tick = () => {
       const elapsed = Date.now() - start;
-      const pct = Math.min((elapsed / duration) * 100, 100);
+      const pct = Math.min((elapsed / minDuration) * 100, 100);
       setProgress(pct);
 
       if (pct < 100) {
@@ -24,23 +45,24 @@ export default function Loader() {
     };
     requestAnimationFrame(tick);
 
-    // Check if page is already loaded
+    // Only exit after minDuration is met, even if page loaded
     const earlyExit = () => {
       if (document.readyState === 'complete') {
-        setTimeout(() => setIsLoading(false), 800);
+        setTimeout(() => setIsLoading(false), minDuration);
       }
     };
 
     if (document.readyState === 'complete') {
-      setTimeout(() => setIsLoading(false), 1200);
+      setTimeout(() => setIsLoading(false), minDuration);
     } else {
       window.addEventListener('load', earlyExit);
     }
 
-    // Hard cap — never exceed 1.8s
-    const fallback = setTimeout(() => setIsLoading(false), 1800);
+    // Hard fallback
+    const fallback = setTimeout(() => setIsLoading(false), maxDuration);
 
     return () => {
+      clearInterval(messageInterval);
       clearTimeout(fallback);
       window.removeEventListener('load', earlyExit);
     };
@@ -54,114 +76,105 @@ export default function Loader() {
           initial={{ opacity: 1 }}
           exit={{
             opacity: 0,
-            scale: 1.02,
-            filter: 'blur(8px)',
+            y: -20,
+            filter: 'blur(10px)',
           }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         >
-          {/* Animated background rings */}
-          <div className={styles.bgRings}>
-            {[...Array(3)].map((_, i) => (
+          {/* Complex Animated Background Map/Network effect */}
+          <div className={styles.networkBackground}>
+            {[...Array(6)].map((_, i) => (
               <motion.div
-                key={i}
-                className={styles.ring}
-                initial={{ scale: 0.6, opacity: 0 }}
-                animate={{
-                  scale: [0.6, 1.2, 0.6],
-                  opacity: [0, 0.08, 0],
+                key={`node-${i}`}
+                className={styles.networkNode}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ 
+                  opacity: [0, 0.5, 0],
+                  scale: [0, 1.5, 2],
+                  x: [0, (Math.random() - 0.5) * 300],
+                  y: [0, (Math.random() - 0.5) * 300]
                 }}
                 transition={{
-                  duration: 2.5,
+                  duration: 3 + Math.random() * 2,
                   repeat: Infinity,
-                  delay: i * 0.4,
-                  ease: 'easeInOut',
-                }}
-                style={{
-                  width: 250 + i * 120,
-                  height: 250 + i * 120,
+                  delay: i * 0.5,
+                  ease: "easeOut"
                 }}
               />
             ))}
           </div>
 
-          <div className={styles.loaderContent}>
-            {/* Pulsing logo container */}
-            <motion.div
-              className={styles.logoContainer}
-              initial={{ scale: 0.5, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            >
-              {/* Orbiting ring */}
-              <motion.div
-                className={styles.orbitRing}
-                animate={{ rotate: 360 }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-              >
-                <div className={styles.orbitDot} />
-              </motion.div>
+          <div className={styles.gridBackground} />
 
-              {/* Logo */}
+          <div className={styles.loaderContent}>
+            {/* The Logo with a pulse effect */}
+            <motion.div
+              className={styles.logoWrapper}
+              initial={{ scale: 0.8, opacity: 0, rotate: -10 }}
+              animate={{ scale: 1, opacity: 1, rotate: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            >
               <motion.div
-                className={styles.logoInner}
+                className={styles.glow}
                 animate={{
-                  boxShadow: [
-                    '0 0 30px rgba(46, 125, 50, 0.2)',
-                    '0 0 60px rgba(46, 125, 50, 0.4)',
-                    '0 0 30px rgba(46, 125, 50, 0.2)',
-                  ],
+                  scale: [1, 1.2, 1],
+                  opacity: [0.3, 0.6, 0.3],
                 }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                <Image
-                  src="/images/logo.jpg"
-                  alt="The EPIX Initiative"
-                  width={72}
-                  height={72}
-                  className={styles.logo}
-                  priority
-                />
-              </motion.div>
+                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+              />
+              <Image
+                src="/images/logo.jpg"
+                alt="The EPIX Initiative"
+                width={72}
+                height={72}
+                className={styles.logo}
+                priority
+              />
             </motion.div>
 
-            {/* Brand text */}
+            {/* Brand Name */}
             <motion.div
               className={styles.brandBlock}
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
+              transition={{ delay: 0.2, duration: 0.7 }}
             >
               <h1 className={styles.brandName}>
-                <span className={styles.brandThe}>The</span>
-                <span className={styles.brandEpix}>EPIX</span>
-                <span className={styles.brandThe}>Initiative</span>
+                The <span className={styles.brandEpix}>EPIX</span> Initiative
               </h1>
-              <motion.p
-                className={styles.tagline}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6 }}
-              >
-                Building Africa&apos;s Evidence Base
-              </motion.p>
             </motion.div>
 
-            {/* Minimal progress bar */}
+            {/* Loading text / decoding effect */}
             <motion.div
-              className={styles.progressWrapper}
+              className={styles.loadingInfo}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.4, duration: 0.4 }}
+              transition={{ delay: 0.4 }}
             >
-              <div className={styles.progressTrack}>
-                <motion.div
-                  className={styles.progressFill}
-                  style={{ width: `${Math.min(progress, 100)}%` }}
-                />
+              <div className={styles.statusLine}>
+                <span className={styles.statusDot} />
+                <AnimatePresence mode="wait">
+                  <motion.span 
+                    key={loadingText}
+                    className={styles.statusText}
+                    initial={{ opacity: 0, y: 5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {loadingText}
+                  </motion.span>
+                </AnimatePresence>
               </div>
-              <span className={styles.progressPct}>
-                {Math.min(Math.round(progress), 100)}%
-              </span>
+              <div className={styles.progressContainer}>
+                <span className={styles.progressPct}>{Math.min(Math.round(progress), 100)}%</span>
+                <div className={styles.progressTrack}>
+                  <motion.div
+                    className={styles.progressFill}
+                    style={{ width: `${Math.min(progress, 100)}%` }}
+                  />
+                </div>
+              </div>
             </motion.div>
           </div>
         </motion.div>
