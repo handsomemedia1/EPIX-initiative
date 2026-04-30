@@ -76,8 +76,8 @@ function DNA({ mouse }) {
   });
 
   return (
-    // Offset position to the right side of the screen
-    <group ref={ref} position={[3.5, 0, 0]} rotation={[0.2, 0, 0]}>
+    // Offset position to the right side of the screen, brought in slightly
+    <group ref={ref} position={[1.8, 0, 0]} rotation={[0.2, 0, 0]}>
       <Points positions={positions} colors={colors}>
         <PointMaterial
           transparent
