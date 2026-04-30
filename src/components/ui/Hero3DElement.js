@@ -1,20 +1,20 @@
 "use client";
 
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Points, PointMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 
 // Generate DNA Helix Particles
-function DNA() {
+function DNA({ mouse }) {
   const ref = useRef();
   
   // Calculate particle positions
   const [positions, colors] = useMemo(() => {
-    const numParticles = 800; // Number of particles per strand
-    const radius = 1.2;       // Radius of the helix
-    const height = 10;        // Total height of the helix
-    const turns = 4;          // Number of turns
+    const numParticles = 2500; // Increased for density
+    const radius = 1.4;        // Slightly wider
+    const height = 22;         // Taller to span full height
+    const turns = 8;           // More turns to match height
     
     const positions = new Float32Array(numParticles * 2 * 3); // 2 strands, 3 coords (x,y,z)
     const colors = new Float32Array(numParticles * 2 * 3);
@@ -48,9 +48,9 @@ function DNA() {
       colors[idx + 2] = color2.b;
     }
 
-    // Add some random scatter / noise to make it look organic
+    // Add some random scatter / noise (reduced slightly for tighter look)
     for (let i = 0; i < positions.length; i++) {
-      positions[i] += (Math.random() - 0.5) * 0.15;
+      positions[i] += (Math.random() - 0.5) * 0.08;
     }
 
     return [positions, colors];
@@ -61,14 +61,14 @@ function DNA() {
     if (!ref.current) return;
     
     // Slow continuous rotation
-    ref.current.rotation.y += 0.005;
+    ref.current.rotation.y += 0.003;
     
     // Subtle float effect
-    ref.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2;
+    ref.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.3;
 
-    // Mouse interaction - slightly tilt the helix towards mouse
-    const targetRotationX = (state.pointer.y * Math.PI) / 8;
-    const targetRotationZ = -(state.pointer.x * Math.PI) / 8;
+    // Mouse interaction using global mouse state
+    const targetRotationX = (mouse.y * Math.PI) / 8;
+    const targetRotationZ = -(mouse.x * Math.PI) / 8;
     
     // Smooth interpolation for mouse movement
     ref.current.rotation.x += (targetRotationX - ref.current.rotation.x) * 0.05;
@@ -76,12 +76,13 @@ function DNA() {
   });
 
   return (
-    <group ref={ref} rotation={[0.2, 0, 0]}>
+    // Offset position to the right side of the screen
+    <group ref={ref} position={[3.5, 0, 0]} rotation={[0.2, 0, 0]}>
       <Points positions={positions} colors={colors}>
         <PointMaterial
           transparent
           vertexColors
-          size={0.06}
+          size={0.05}
           sizeAttenuation={true}
           depthWrite={false}
           blending={THREE.AdditiveBlending}
@@ -89,7 +90,7 @@ function DNA() {
       </Points>
       
       {/* Connecting Lines between strands */}
-      <Connections positions={positions} numParticles={800} />
+      <Connections positions={positions} numParticles={2500} />
     </group>
   );
 }
@@ -98,8 +99,8 @@ function DNA() {
 function Connections({ positions, numParticles }) {
   const lineGeometry = useMemo(() => {
     const geometry = new THREE.BufferGeometry();
-    // We will draw a line every 10 particles
-    const step = 15;
+    // Decreased step for tighter, denser connections
+    const step = 8;
     const linePositions = [];
     const lineColors = [];
     
@@ -132,19 +133,30 @@ function Connections({ positions, numParticles }) {
 }
 
 export default function Hero3DElement() {
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      // Normalize mouse coordinates to -1 to +1
+      setMouse({
+        x: (event.clientX / window.innerWidth) * 2 - 1,
+        y: -(event.clientY / window.innerHeight) * 2 + 1,
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
-    <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0, right: 0, zIndex: 0, pointerEvents: 'none' }}>
-      {/* 
-        We use pointerEvents: 'auto' on the Canvas itself so it captures mouse movement,
-        but the wrapper is 'none' so it doesn't block the UI.
-      */}
+    <div style={{ width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, zIndex: 0, pointerEvents: 'none' }}>
       <Canvas 
-        camera={{ position: [0, 0, 6], fov: 45 }}
-        style={{ pointerEvents: 'auto' }}
-        dpr={[1, 2]} // Support high-DPI displays for crisp rendering
+        camera={{ position: [0, 0, 8], fov: 45 }}
+        style={{ pointerEvents: 'none' }} // Crucial: lets clicks pass through to buttons
+        dpr={[1, 2]} 
       >
         <ambientLight intensity={0.5} />
-        <DNA />
+        <DNA mouse={mouse} />
       </Canvas>
     </div>
   );

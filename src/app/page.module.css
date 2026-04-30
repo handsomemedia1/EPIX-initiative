@@ -14,41 +14,26 @@
 }
 
 .heroGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 3rem;
+  display: flex;
   position: relative;
   z-index: 1;
-}
-
-@media (min-width: 992px) {
-  .heroGrid {
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 4rem;
-  }
 }
 
 .heroLeft {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 720px;
 }
 
 .heroRight {
   position: absolute;
   top: 0;
-  right: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   z-index: 0;
   pointer-events: none;
-}
-
-@media (min-width: 992px) {
-  .heroRight {
-    position: relative;
-    height: 600px;
-  }
 }
 
 

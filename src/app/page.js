@@ -28,6 +28,10 @@ export default function Home() {
 
       {/* ── HERO ── */}
       <section className={styles.heroSection}>
+        <div className={styles.heroRight}>
+          <Hero3DElement />
+        </div>
+        
         <div className={`container ${styles.heroGrid}`}>
 
           <div className={styles.heroLeft}>
@@ -81,10 +85,6 @@ export default function Home() {
                 ))}
               </div>
             </motion.div>
-          </div>
-
-          <div className={styles.heroRight}>
-            <Hero3DElement />
           </div>
 
         </div>
