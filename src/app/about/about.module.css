@@ -331,63 +331,99 @@
 }
 
 .valuesWrapper {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
-.valuesWrapper h2 {
+.valuesWrapper .sectionHeader h2 {
   color: var(--bg-primary);
 }
 
+/* 3-column grid on desktop, stacked on mobile */
 .valuesList {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .valuesList {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
 }
 
 .valueItem {
   display: flex;
-  gap: 1rem;
-  align-items: flex-start;
-  padding: 1.5rem;
+  flex-direction: column;
+  padding: 2rem 1.75rem 2.25rem;
   background: white;
-  border: 1px solid #E2E8F0;
-  border-radius: var(--radius-md);
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+  /* Vivid emerald left accent border */
+  border-left: 4px solid var(--accent-green);
+  border-top: 1px solid #E2E8F0;
+  border-right: 1px solid #E2E8F0;
+  border-bottom: 1px solid #E2E8F0;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  position: relative;
+  overflow: hidden;
 }
 
-@media (min-width: 480px) {
-  .valueItem {
-    gap: 1.75rem;
-    padding: 2rem;
-  }
+/* Subtle background shimmer on hover */
+.valueItem::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.03) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .valueItem:hover {
-  border-color: var(--accent-green);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-  transform: translateX(4px);
+  box-shadow: 0 12px 32px rgba(16, 185, 129, 0.12);
+  transform: translateY(-4px);
+  border-left-color: #059669;
 }
 
+.valueItem:hover::before {
+  opacity: 1;
+}
+
+/* Numbered badge */
 .valueNum {
-  font-size: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #10B981, #059669);
+  color: white;
+  font-size: 0.75rem;
   font-weight: 800;
-  color: #F1F5F9;
-  line-height: 1;
+  border-radius: 10px;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.5rem;
   flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
 }
 
 .valueText h3 {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
   color: var(--bg-primary);
-  font-size: 1.25rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .valueText p {
-  font-size: 1rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.75;
 }
 
 /* ── Team & CTA (Deep Green) ── */
