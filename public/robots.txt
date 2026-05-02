@@ -1,0 +1,12 @@
+# EPIX Initiative — robots.txt
+# Allow all well-behaved crawlers to index the site
+
+User-agent: *
+Allow: /
+
+# Block access to Next.js internals
+Disallow: /_next/
+Disallow: /api/
+
+# Sitemap location
+Sitemap: https://epix-initiative.fly.dev/sitemap.xml
