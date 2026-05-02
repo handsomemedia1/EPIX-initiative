@@ -10,8 +10,8 @@
   --text-muted: #64748B;
   
   /* Accents */
-  --accent-green: #10B981;
-  --accent-green-deep: #059669;
+  --accent-green: #10B981; /* Light emerald for text and accents */
+  --accent-green-deep: #011E13; /* Ultra deep forest green for backgrounds */
   --accent-green-muted: rgba(16, 185, 129, 0.15);
   --accent-blue: #3B82F6;
   --accent-blue-muted: rgba(59, 130, 246, 0.12);
@@ -196,7 +196,7 @@ p {
 }
 
 .btn-primary:hover {
-  background-color: var(--accent-green-deep);
+  background-color: #059669; /* Dark emerald for hover */
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(16, 185, 129, 0.25);
 }
