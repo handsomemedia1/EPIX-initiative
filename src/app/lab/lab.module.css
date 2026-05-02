@@ -5,12 +5,18 @@
 
 /* ── Hero ── */
 .heroSection {
-  padding: 12rem 0 10rem;
+  padding: 7rem 0 5rem;
   position: relative;
   min-height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .heroSection {
+    padding: 12rem 0 10rem;
+  }
 }
 
 .heroBackground {
@@ -58,20 +64,24 @@
 
 /* ── Floating Quote Overlap ── */
 .quoteOverlapWrapper {
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  position: relative;
+  left: auto;
+  transform: none;
   width: 100%;
-  transform: translateY(50%);
   z-index: 10;
-  padding: 0 1.5rem;
+  padding: 0 1.25rem;
+  margin: 2rem auto -2rem;
 }
 
-@media (max-width: 992px) {
+@media (min-width: 992px) {
   .quoteOverlapWrapper {
-    position: relative;
-    transform: none;
-    margin: 4rem auto -4rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    transform: translateY(50%);
+    margin: 0;
+    padding: 0 1.5rem;
   }
 }
 
@@ -140,7 +150,13 @@
 /* ── About Content (White) ── */
 .aboutSection {
   background-color: white;
-  padding: 10rem 0 6rem; /* Top padding to clear floating widget */
+  padding: 5rem 0 4rem;
+}
+
+@media (min-width: 992px) {
+  .aboutSection {
+    padding: 10rem 0 6rem;
+  }
 }
 
 .aboutContent {

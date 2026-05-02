@@ -5,12 +5,18 @@
 
 /* ── Hero ── */
 .heroSection {
-  padding: 12rem 0 10rem;
+  padding: 7rem 0 5rem;
   position: relative;
   min-height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .heroSection {
+    padding: 12rem 0 10rem;
+  }
 }
 
 .heroBackground {
@@ -63,25 +69,42 @@
 
 /* ── Quote Overlap ── */
 .quoteOverlapWrapper {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translate(-50%, 50%);
+  position: relative;
+  left: auto;
+  transform: none;
   width: 100%;
   max-width: 800px;
   z-index: 10;
-  padding: 0 1.5rem;
+  padding: 0 1.25rem;
+  margin: 2rem auto -4rem;
+}
+
+@media (min-width: 768px) {
+  .quoteOverlapWrapper {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    margin: 0;
+    padding: 0 1.5rem;
+  }
 }
 
 .quoteBox {
   text-align: center;
-  padding: 3rem 4rem;
-  background: rgba(4, 57, 39, 0.9); /* Deep forest green glass */
+  padding: 2rem 1.5rem;
+  background: rgba(4, 57, 39, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-xl);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 768px) {
+  .quoteBox {
+    padding: 3rem 4rem;
+  }
 }
 
 .quoteIcon {
@@ -103,7 +126,13 @@
 .storySection {
   background-color: white;
   color: var(--bg-primary);
-  padding: 12rem 0 6rem; /* Top padding to clear overlapping quote */
+  padding: 5rem 0 4rem;
+}
+
+@media (min-width: 768px) {
+  .storySection {
+    padding: 10rem 0 6rem;
+  }
 }
 
 .storyContent {
@@ -318,14 +347,21 @@
 
 .valueItem {
   display: flex;
-  gap: 1.75rem;
+  gap: 1rem;
   align-items: flex-start;
-  padding: 2rem;
+  padding: 1.5rem;
   background: white;
   border: 1px solid #E2E8F0;
   border-radius: var(--radius-md);
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+}
+
+@media (min-width: 480px) {
+  .valueItem {
+    gap: 1.75rem;
+    padding: 2rem;
+  }
 }
 
 .valueItem:hover {

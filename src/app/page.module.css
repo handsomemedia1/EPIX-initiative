@@ -5,12 +5,18 @@
 
 /* ── Hero ── */
 .heroSection {
-  padding: 12rem 0 10rem; /* Increased bottom padding to accommodate overlapping boxes */
+  padding: 8rem 0 4rem;
   position: relative;
-  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .heroSection {
+    padding: 12rem 0 10rem;
+  }
 }
 
 .heroBackground {
@@ -62,22 +68,23 @@
 }
 
 /* ── Overlapping Features ── */
+/* On mobile: flow naturally below hero. On desktop: overlap */
 .heroFeaturesWrapper {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0;
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translate(-50%, 50%);
   width: 100%;
-  max-width: var(--container-width);
   z-index: 10;
-  padding: 0 1.5rem;
+  padding: 0;
 }
 
 @media (min-width: 992px) {
   .heroFeaturesWrapper {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    max-width: var(--container-width);
     grid-template-columns: repeat(3, 1fr);
     padding: 0 2.5rem;
   }
@@ -184,7 +191,13 @@
 .projectsSection {
   background-color: white;
   color: var(--bg-primary);
-  padding: 12rem 0 6rem; /* Top padding to clear overlapping features */
+  padding: 4rem 0 6rem;
+}
+
+@media (min-width: 992px) {
+  .projectsSection {
+    padding: 12rem 0 6rem; /* Top padding to clear overlapping features */
+  }
 }
 
 .sectionHeaderProjects {
@@ -292,7 +305,7 @@
   line-height: 1.6;
 }
 
-/* ── Upcoming Events Section ── */
+/* ── Events ── */
 .eventsSection {
   background-color: white;
   padding: 4rem 0 8rem;
@@ -312,17 +325,19 @@
 
 .eventsHeader {
   display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
   background: var(--bg-secondary);
   color: white;
-  padding: 1.5rem 2rem;
+  padding: 1.25rem 1.5rem;
   border-radius: var(--radius-sm);
 }
 
 .eventsHeader h3 {
-  font-size: 1.1rem;
+  font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin: 0;
@@ -348,13 +363,21 @@
 
 .eventItem {
   display: flex;
-  align-items: center;
-  gap: 2rem;
-  padding: 1.5rem 2rem;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: var(--radius-sm);
   background: #FAFAFA;
   transition: all 0.2s ease;
+}
+
+@media (min-width: 480px) {
+  .eventItem {
+    align-items: center;
+    gap: 2rem;
+    padding: 1.5rem 2rem;
+  }
 }
 
 .eventItem:hover {
@@ -409,7 +432,14 @@
 
 .newsletterForm {
   display: flex;
-  gap: 0.5rem;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+@media (min-width: 480px) {
+  .newsletterForm {
+    flex-direction: row;
+  }
 }
 
 .newsletterInput {

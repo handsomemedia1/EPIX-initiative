@@ -5,12 +5,18 @@
 
 /* ── Hero ── */
 .heroSection {
-  padding: 12rem 0 10rem;
+  padding: 7rem 0 5rem;
   position: relative;
   min-height: 80vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .heroSection {
+    padding: 12rem 0 10rem;
+  }
 }
 
 .heroBackground {
@@ -76,7 +82,9 @@
     right: auto;
     bottom: auto;
     transform: none;
-    margin: 4rem auto -4rem;
+    max-width: 100%;
+    margin: 2rem auto 0;
+    padding: 0 1.25rem;
   }
 }
 
@@ -162,7 +170,13 @@
 /* ── About the Academy (White) ── */
 .aboutSection {
   background-color: white;
-  padding: 10rem 0 6rem; /* Top padding to clear floating widget */
+  padding: 4rem 0 4rem;
+}
+
+@media (min-width: 992px) {
+  .aboutSection {
+    padding: 10rem 0 6rem;
+  }
 }
 
 .aboutAcademy {
@@ -317,13 +331,20 @@
 
 .moduleItem {
   display: flex;
-  gap: 1.75rem;
-  padding: 2rem;
+  gap: 1rem;
+  padding: 1.5rem;
   background: white;
   border: 1px solid #E2E8F0;
   border-radius: var(--radius-md);
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+}
+
+@media (min-width: 480px) {
+  .moduleItem {
+    gap: 1.75rem;
+    padding: 2rem;
+  }
 }
 
 .moduleItem:hover {
