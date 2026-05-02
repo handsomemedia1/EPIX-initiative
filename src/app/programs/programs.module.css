@@ -5,21 +5,41 @@
 
 /* ── Hero ── */
 .heroSection {
-  padding: 10rem 0 5rem;
-  border-bottom: 1px solid var(--glass-border);
+  padding: 12rem 0 10rem;
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.heroBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/images/programs_hero.png');
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.heroOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(7, 20, 40, 0.95) 0%, rgba(1, 30, 19, 0.8) 100%);
+  z-index: 1;
 }
 
 .heroGrid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 3rem;
-}
-
-@media (min-width: 992px) {
-  .heroGrid {
-    grid-template-columns: 1.4fr 1fr;
-    align-items: start;
-  }
+  max-width: 800px;
 }
 
 .heroTitle {
@@ -28,39 +48,57 @@
 
 .subTitle {
   font-size: 1.125rem;
-  color: var(--accent-green);
   font-weight: 600;
   margin-bottom: 1.5rem;
 }
 
 .heroBody {
-  font-size: 1rem;
-  color: var(--text-secondary);
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
   line-height: 1.7;
 }
 
-.sidebarWidget {
-  padding: 2rem;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
-  backdrop-filter: var(--glass-blur);
-  box-shadow: var(--glass-shadow);
+/* ── Sidebar Widget (Floating Overlap) ── */
+.widgetOverlapWrapper {
+  position: absolute;
+  bottom: 0;
+  right: 10%;
+  transform: translateY(50%);
+  width: 100%;
+  max-width: 380px;
+  z-index: 10;
+  padding: 0 1.5rem;
 }
 
-.sidebarWidget:hover {
-  transform: none;
+@media (max-width: 992px) {
+  .widgetOverlapWrapper {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    transform: none;
+    margin: 4rem auto -4rem;
+  }
+}
+
+.sidebarWidget {
+  padding: 2.5rem;
+  background: rgba(4, 57, 39, 0.9); /* Deep forest green glass */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 .sidebarWidget h3 {
   margin-bottom: 1.25rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding-bottom: 1rem;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   font-weight: 700;
-  color: var(--text-primary);
+  color: white;
 }
 
 .widgetList {
@@ -74,12 +112,12 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
 }
 
 .widgetList li strong {
-  color: var(--text-primary);
+  color: white;
 }
 
 .widgetList li svg {
@@ -87,7 +125,46 @@
   flex-shrink: 0;
 }
 
-/* ── What is the Academy ── */
+/* ── Torn Edges ── */
+.tornEdgeTopGreen {
+  width: 100%;
+  height: 60px;
+  background-color: white;
+  clip-path: polygon(0 100%, 100% 100%, 100% 0, 95% 40%, 85% 10%, 75% 50%, 65% 20%, 55% 60%, 45% 10%, 35% 50%, 25% 20%, 15% 60%, 5% 30%, 0 0);
+  transform: rotate(180deg);
+  margin-bottom: -1px;
+}
+
+.tornEdgeBottomWhite {
+  width: 100%;
+  height: 60px;
+  background-color: white;
+  clip-path: polygon(0 100%, 100% 100%, 100% 0, 95% 40%, 85% 10%, 75% 50%, 65% 20%, 55% 60%, 45% 10%, 35% 50%, 25% 20%, 15% 60%, 5% 30%, 0 0);
+  margin-top: -1px;
+  z-index: 5;
+  position: relative;
+}
+
+.tornEdgeBottomDark {
+  width: 100%;
+  height: 60px;
+  background-color: var(--accent-green-deep);
+  clip-path: polygon(0 100%, 100% 100%, 100% 0, 95% 40%, 85% 10%, 75% 50%, 65% 20%, 55% 60%, 45% 10%, 35% 50%, 25% 20%, 15% 60%, 5% 30%, 0 0);
+  transform: rotate(180deg);
+  margin-top: -1px;
+}
+
+.deepGreenWrapper {
+  background-color: var(--accent-green-deep);
+  padding: 0;
+}
+
+/* ── About the Academy (White) ── */
+.aboutSection {
+  background-color: white;
+  padding: 10rem 0 6rem; /* Top padding to clear floating widget */
+}
+
 .aboutAcademy {
   max-width: 1000px;
   margin: 0 auto;
@@ -95,6 +172,7 @@
 
 .aboutAcademy h2 {
   margin-bottom: 2rem;
+  color: var(--bg-primary);
 }
 
 .twoColumnText {
@@ -111,13 +189,14 @@
 }
 
 .twoColumnText p {
-  font-size: 1rem;
+  font-size: 1.05rem;
   line-height: 1.8;
+  color: var(--text-secondary);
 }
 
-/* ── Levels ── */
+/* ── Levels (Deep Green) ── */
 .levelsSection {
-  position: relative;
+  padding: 3rem 0;
 }
 
 .levelsGrid {
@@ -135,114 +214,150 @@
 .levelCard {
   display: flex;
   flex-direction: column;
-  padding: 2rem;
+  padding: 2.5rem;
+  background: rgba(4, 57, 39, 0.85); /* Deep green glass */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  color: white;
+  transition: transform 0.3s ease;
+}
+
+.levelCard:hover {
+  transform: translateY(-5px);
+  background: rgba(1, 30, 19, 0.95);
 }
 
 .levelHeader {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
 }
 
 .levelBadge {
   display: inline-block;
   padding: 0.3rem 0.75rem;
-  background: var(--accent-green-muted);
+  background: rgba(16, 185, 129, 0.2);
   color: var(--accent-green);
   border-radius: 100px;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.levelCard h3 {
+  color: white;
+  font-size: 1.3rem;
 }
 
 .levelDetails {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
   flex-grow: 1;
 }
 
 .levelDetails li {
-  font-size: 0.9rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
 }
 
 .levelDetails li strong {
   display: block;
-  color: var(--text-primary);
-  margin-bottom: 0.15rem;
-  font-size: 0.85rem;
+  color: white;
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
 }
 
 .levelFooter {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
-  padding-top: 1.25rem;
+  gap: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1.5rem;
 }
 
 .price {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--accent-green);
   text-align: center;
 }
 
-/* ── Curriculum ── */
+/* ── Curriculum (White) ── */
+.curriculumSection {
+  background-color: white;
+  padding: 6rem 0;
+}
+
 .curriculumWrapper {
   max-width: 800px;
   margin: 0 auto;
 }
 
+.sectionHeaderWhite {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 3.5rem;
+}
+
+.sectionHeaderWhite h2 {
+  margin-bottom: 1rem;
+  color: var(--bg-primary);
+}
+
 .modulesGrid {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
 }
 
 .moduleItem {
   display: flex;
-  gap: 1.5rem;
-  padding: 1.5rem;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
+  gap: 1.75rem;
+  padding: 2rem;
+  background: white;
+  border: 1px solid #E2E8F0;
   border-radius: var(--radius-md);
   transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
 }
 
 .moduleItem:hover {
-  border-color: var(--glass-border-hover);
+  border-color: var(--accent-green);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
   transform: translateX(4px);
 }
 
 .moduleNumber {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 800;
-  color: rgba(255, 255, 255, 0.06);
+  color: #F1F5F9;
   line-height: 1;
   flex-shrink: 0;
 }
 
 .moduleText h3 {
   margin-bottom: 0.5rem;
-  font-size: 1.125rem;
+  font-size: 1.25rem;
+  color: var(--bg-primary);
 }
 
 .moduleText p {
-  font-size: 0.9rem;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
 }
 
 .practicalProject {
   display: flex;
-  gap: 1rem;
-  padding: 1.5rem;
-  background: var(--accent-green-muted);
-  border: 1px solid rgba(16, 185, 129, 0.2);
+  gap: 1.5rem;
+  padding: 2rem;
+  background: #F0FDF4; /* Very light green */
+  border: 1px solid #BBF7D0;
   border-radius: var(--radius-md);
   align-items: flex-start;
 }
@@ -253,9 +368,15 @@
   margin-top: 0.15rem;
 }
 
+.practicalProject h3 {
+  color: var(--bg-primary);
+  margin-bottom: 0.5rem;
+}
+
 .practicalProject p {
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   line-height: 1.6;
+  color: var(--text-secondary);
 }
 
 /* ── Section Headers ── */
@@ -269,9 +390,9 @@
   margin-bottom: 1rem;
 }
 
-/* ── CTA ── */
+/* ── CTA (Deep Green) ── */
 .ctaSection {
-  padding-bottom: 2rem;
+  padding: 2rem 0 4rem;
 }
 
 .ctaBox {
@@ -280,11 +401,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: var(--bg-secondary);
-}
-
-.ctaBox:hover {
-  transform: none;
+  background: rgba(1, 30, 19, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-xl);
 }
 
 .ctaBox h2 {
@@ -293,12 +412,13 @@
 
 .ctaBox p {
   max-width: 540px;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
+  font-size: 1.1rem;
 }
 
 .ctaActions {
   display: flex;
-  gap: 0.75rem;
+  gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
 }

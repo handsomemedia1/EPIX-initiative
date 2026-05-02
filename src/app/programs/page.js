@@ -2,8 +2,13 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, BookOpen, Clock, Users, CheckCircle } from 'lucide-react';
+import { BookOpen, Clock, Users, CheckCircle } from 'lucide-react';
 import styles from './programs.module.css';
+
+const cinematicScale = {
+  hidden: { opacity: 0, scale: 0.95, y: 20 },
+  visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+};
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -21,9 +26,12 @@ const staggerContainer = {
 export default function Programs() {
   return (
     <div className={styles.programsWrapper}>
-      {/* HERO SECTION */}
+      {/* ── HERO SECTION ── */}
       <section className={styles.heroSection}>
-        <div className="container">
+        <div className={styles.heroBackground}></div>
+        <div className={styles.heroOverlay}></div>
+        
+        <div className="container" style={{ position: 'relative', zIndex: 2 }}>
           <motion.div 
             className={styles.heroGrid}
             initial="hidden"
@@ -31,33 +39,40 @@ export default function Programs() {
             variants={staggerContainer}
           >
             <div className={styles.heroContent}>
-              <motion.span variants={fadeUp} className="eyebrow">Our Programs</motion.span>
+              <motion.span variants={fadeUp} className="eyebrow" style={{ color: 'rgba(255,255,255,0.8)' }}>Our Programs</motion.span>
               <motion.h1 variants={fadeUp} className={styles.heroTitle}>The Academy</motion.h1>
-              <motion.p variants={fadeUp} className={styles.subTitle}>Where Research Skills Are Built</motion.p>
+              <motion.p variants={fadeUp} className={styles.subTitle} style={{ color: 'var(--accent-green)' }}>Where Research Skills Are Built</motion.p>
               <motion.p variants={fadeUp} className={styles.heroBody}>
                 The EPIX Academy trains students and young health professionals with practical, hands-on research skills. Fully online. Accessible across Nigeria. No prior research experience required.
               </motion.p>
             </div>
+          </motion.div>
+        </div>
 
-            {/* SIDEBAR WIDGET */}
-            <motion.div variants={fadeUp} className={`glass-card ${styles.sidebarWidget}`}>
-              <h3>At a Glance</h3>
-              <ul className={styles.widgetList}>
-                <li><Globe size={18} /> <strong>Format:</strong> Fully Online</li>
-                <li><Users size={18} /> <strong>Target:</strong> Students & Young Professionals</li>
-                <li><BookOpen size={18} /> <strong>Levels:</strong> Three Certification Levels</li>
-                <li><Clock size={18} /> <strong>Next Cohort:</strong> May 2026</li>
-              </ul>
-              <Link href="/get-involved" className="btn-primary" style={{ width: '100%', marginTop: '1.5rem' }}>
-                Apply Now
-              </Link>
-            </motion.div>
+        {/* ── SIDEBAR WIDGET (Floating Overlap) ── */}
+        <div className={styles.widgetOverlapWrapper}>
+          <motion.div 
+            className={styles.sidebarWidget}
+            initial="hidden"
+            animate="visible"
+            variants={cinematicScale}
+          >
+            <h3>At a Glance</h3>
+            <ul className={styles.widgetList}>
+              <li><Globe size={18} /> <strong>Format:</strong> Fully Online</li>
+              <li><Users size={18} /> <strong>Target:</strong> Students & Young Professionals</li>
+              <li><BookOpen size={18} /> <strong>Levels:</strong> Three Certification Levels</li>
+              <li><Clock size={18} /> <strong>Next Cohort:</strong> May 2026</li>
+            </ul>
+            <Link href="/get-involved" className="btn-primary" style={{ width: '100%', marginTop: '1.5rem', textAlign: 'center', display: 'block' }}>
+              Apply Now
+            </Link>
           </motion.div>
         </div>
       </section>
 
-      {/* WHAT IS THE ACADEMY */}
-      <section className="section">
+      {/* ── WHAT IS THE ACADEMY (White Section) ── */}
+      <section className={styles.aboutSection}>
         <div className="container">
           <motion.div 
             className={styles.aboutAcademy}
@@ -76,87 +91,93 @@ export default function Programs() {
         </div>
       </section>
 
-      {/* THREE LEVELS */}
-      <section className={`section ${styles.levelsSection}`}>
-        <div className="container">
-          <motion.div 
-            className={styles.sectionHeader}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-          >
-            <span className="eyebrow">Program Structure</span>
-            <h2>Three Levels. One Clear Pathway.</h2>
-            <p>Each level builds on the last. You can join at the level that matches where you are right now.</p>
-          </motion.div>
-
-          <motion.div 
-            className={styles.levelsGrid}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-          >
-            {/* LEVEL 1 */}
-            <motion.div variants={fadeUp} className={`glass-card ${styles.levelCard}`}>
-              <div className={styles.levelHeader}>
-                <span className={styles.levelBadge}>Level 1</span>
-                <h3>Research Foundations Certificate</h3>
-              </div>
-              <ul className={styles.levelDetails}>
-                <li><strong>Duration:</strong> 4 Weeks</li>
-                <li><strong>Who It Is For:</strong> Complete beginners. Students, fresh graduates, NGO staff.</li>
-                <li><strong>What You Learn:</strong> Research design, data collection, data cleaning and analysis, and research ethics. You leave with a completed research proposal.</li>
-                <li><strong>Output:</strong> Research proposal and certificate</li>
-              </ul>
-              <div className={styles.levelFooter}>
-                <span className={styles.price}>TBD</span>
-                <Link href="/get-involved" className="btn-secondary">Apply for Level 1</Link>
-              </div>
+      {/* ── THREE LEVELS (Deep Green Section) ── */}
+      <div className={styles.deepGreenWrapper}>
+        <div className={styles.tornEdgeTopGreen}></div>
+        
+        <section className={styles.levelsSection}>
+          <div className="container">
+            <motion.div 
+              className={styles.sectionHeader}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+            >
+              <span className="eyebrow" style={{ color: 'rgba(255,255,255,0.8)' }}>Program Structure</span>
+              <h2 style={{ color: 'white' }}>Three Levels. One Clear Pathway.</h2>
+              <p style={{ color: 'rgba(255,255,255,0.9)' }}>Each level builds on the last. You can join at the level that matches where you are right now.</p>
             </motion.div>
 
-            {/* LEVEL 2 */}
-            <motion.div variants={fadeUp} className={`glass-card ${styles.levelCard}`}>
-              <div className={styles.levelHeader}>
-                <span className={styles.levelBadge}>Level 2</span>
-                <h3>Data and Analysis Certificate</h3>
-              </div>
-              <ul className={styles.levelDetails}>
-                <li><strong>Duration:</strong> 4 Weeks</li>
-                <li><strong>Who It Is For:</strong> People with Level 1 or equivalent background who want to go deeper into data.</li>
-                <li><strong>What You Learn:</strong> Advanced data management, statistical analysis, data visualization, and interpretation of findings.</li>
-                <li><strong>Output:</strong> Completed data analysis project and certificate</li>
-              </ul>
-              <div className={styles.levelFooter}>
-                <span className={styles.price}>TBD</span>
-                <Link href="/get-involved" className="btn-secondary">Apply for Level 2</Link>
-              </div>
-            </motion.div>
+            <motion.div 
+              className={styles.levelsGrid}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={staggerContainer}
+            >
+              {/* LEVEL 1 */}
+              <motion.div variants={fadeUp} className={styles.levelCard}>
+                <div className={styles.levelHeader}>
+                  <span className={styles.levelBadge}>Level 1</span>
+                  <h3>Research Foundations Certificate</h3>
+                </div>
+                <ul className={styles.levelDetails}>
+                  <li><strong>Duration:</strong> 4 Weeks</li>
+                  <li><strong>Who It Is For:</strong> Complete beginners. Students, fresh graduates, NGO staff.</li>
+                  <li><strong>What You Learn:</strong> Research design, data collection, data cleaning and analysis, and research ethics. You leave with a completed research proposal.</li>
+                  <li><strong>Output:</strong> Research proposal and certificate</li>
+                </ul>
+                <div className={styles.levelFooter}>
+                  <span className={styles.price}>TBD</span>
+                  <Link href="/get-involved" className="btn-secondary" style={{ backgroundColor: 'white', color: 'var(--bg-primary)' }}>Apply for Level 1</Link>
+                </div>
+              </motion.div>
 
-            {/* LEVEL 3 */}
-            <motion.div variants={fadeUp} className={`glass-card ${styles.levelCard}`}>
-              <div className={styles.levelHeader}>
-                <span className={styles.levelBadge}>Level 3</span>
-                <h3>Publication Mentorship Program</h3>
-              </div>
-              <ul className={styles.levelDetails}>
-                <li><strong>Duration:</strong> 3 to 6 Months</li>
-                <li><strong>Who It Is For:</strong> Researchers who are ready to publish and want expert guidance through the entire process.</li>
-                <li><strong>What You Learn:</strong> Scientific writing, manuscript development, navigating peer review, and submitting to indexed journals.</li>
-                <li><strong>Output:</strong> Manuscript submitted to a peer-reviewed journal</li>
-              </ul>
-              <div className={styles.levelFooter}>
-                <span className={styles.price}>TBD</span>
-                <Link href="/get-involved" className="btn-secondary">Apply for Level 3</Link>
-              </div>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
+              {/* LEVEL 2 */}
+              <motion.div variants={fadeUp} className={styles.levelCard}>
+                <div className={styles.levelHeader}>
+                  <span className={styles.levelBadge}>Level 2</span>
+                  <h3>Data and Analysis Certificate</h3>
+                </div>
+                <ul className={styles.levelDetails}>
+                  <li><strong>Duration:</strong> 4 Weeks</li>
+                  <li><strong>Who It Is For:</strong> People with Level 1 or equivalent background who want to go deeper into data.</li>
+                  <li><strong>What You Learn:</strong> Advanced data management, statistical analysis, data visualization, and interpretation of findings.</li>
+                  <li><strong>Output:</strong> Completed data analysis project and certificate</li>
+                </ul>
+                <div className={styles.levelFooter}>
+                  <span className={styles.price}>TBD</span>
+                  <Link href="/get-involved" className="btn-secondary" style={{ backgroundColor: 'white', color: 'var(--bg-primary)' }}>Apply for Level 2</Link>
+                </div>
+              </motion.div>
 
-      {/* CURRICULUM */}
-      <section className="section">
+              {/* LEVEL 3 */}
+              <motion.div variants={fadeUp} className={styles.levelCard}>
+                <div className={styles.levelHeader}>
+                  <span className={styles.levelBadge}>Level 3</span>
+                  <h3>Publication Mentorship Program</h3>
+                </div>
+                <ul className={styles.levelDetails}>
+                  <li><strong>Duration:</strong> 3 to 6 Months</li>
+                  <li><strong>Who It Is For:</strong> Researchers who are ready to publish and want expert guidance through the entire process.</li>
+                  <li><strong>What You Learn:</strong> Scientific writing, manuscript development, navigating peer review, and submitting to indexed journals.</li>
+                  <li><strong>Output:</strong> Manuscript submitted to a peer-reviewed journal</li>
+                </ul>
+                <div className={styles.levelFooter}>
+                  <span className={styles.price}>TBD</span>
+                  <Link href="/get-involved" className="btn-secondary" style={{ backgroundColor: 'white', color: 'var(--bg-primary)' }}>Apply for Level 3</Link>
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
+        <div className={styles.tornEdgeBottomWhite}></div>
+      </div>
+
+      {/* ── CURRICULUM (White Section) ── */}
+      <section className={styles.curriculumSection}>
         <div className="container">
           <motion.div 
             className={styles.curriculumWrapper}
@@ -165,7 +186,7 @@ export default function Programs() {
             viewport={{ once: true }}
             variants={staggerContainer}
           >
-            <motion.div variants={fadeUp} className={styles.sectionHeader}>
+            <motion.div variants={fadeUp} className={styles.sectionHeaderWhite}>
               <span className="eyebrow">What You Will Learn</span>
               <h2>The Skills We Teach</h2>
             </motion.div>
@@ -189,37 +210,46 @@ export default function Programs() {
             </div>
 
             <motion.div variants={fadeUp} className={styles.practicalProject}>
-              <CheckCircle size={24} className={styles.checkIcon} />
-              <p><strong>Practical Project:</strong> Design a study, collect real data, analyze it, and present your findings. Every participant leaves with a completed portfolio project. Not just a certificate. Actual work.</p>
+              <CheckCircle size={32} className={styles.checkIcon} />
+              <div>
+                <h3>Practical Project</h3>
+                <p>Design a study, collect real data, analyze it, and present your findings. Every participant leaves with a completed portfolio project. Not just a certificate. Actual work.</p>
+              </div>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* FINAL CTA */}
-      <section className={`section ${styles.ctaSection}`}>
-        <div className="container">
-          <motion.div 
-            className={`glass-card ${styles.ctaBox}`}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-          >
-            <h2>Start Building Real Research Skills</h2>
-            <p>Applications for our next cohort are open. Join a growing community of African researchers trained to generate evidence.</p>
-            <div className={styles.ctaActions}>
-              <Link href="/get-involved" className="btn-primary">Apply Now</Link>
-              <Link href="/get-involved" className="btn-secondary">Get In Touch</Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      {/* ── FINAL CTA (Deep Green) ── */}
+      <div className={styles.deepGreenWrapper}>
+        <div className={styles.tornEdgeTopGreen}></div>
+        
+        <section className={styles.ctaSection}>
+          <div className="container">
+            <motion.div 
+              className={styles.ctaBox}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+            >
+              <h2 style={{ color: 'white' }}>Start Building Real Research Skills</h2>
+              <p style={{ color: 'rgba(255,255,255,0.9)' }}>Applications for our next cohort are open. Join a growing community of African researchers trained to generate evidence.</p>
+              <div className={styles.ctaActions}>
+                <Link href="/get-involved" className="btn-primary">Apply Now</Link>
+                <Link href="/get-involved" className="btn-secondary" style={{ backgroundColor: 'transparent', color: 'white', borderColor: 'rgba(255,255,255,0.2)' }}>Get In Touch</Link>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+        
+        <div className={styles.tornEdgeBottomDark}></div>
+      </div>
     </div>
   );
 }
 
-// Small icon component for Globe since it wasn't imported from lucide-react in the top list but used below.
+// Small icon component for Globe
 function Globe(props) {
   return (
     <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

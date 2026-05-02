@@ -5,8 +5,34 @@
 
 /* ── Hero ── */
 .heroSection {
-  padding: 10rem 0 5rem;
-  border-bottom: 1px solid var(--glass-border);
+  padding: 12rem 0 10rem;
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.heroBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/images/lab_hero.png');
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.heroOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(7, 20, 40, 0.95) 0%, rgba(1, 30, 19, 0.8) 100%);
+  z-index: 1;
 }
 
 .heroContent {
@@ -19,77 +45,134 @@
 
 .subTitle {
   font-size: 1.125rem;
-  color: var(--accent-green);
   font-weight: 600;
   margin-bottom: 1.5rem;
 }
 
 .heroBody {
-  font-size: 1rem;
-  color: var(--text-secondary);
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
   max-width: 700px;
   line-height: 1.7;
 }
 
-/* ── Quote ── */
+/* ── Floating Quote Overlap ── */
+.quoteOverlapWrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  transform: translateY(50%);
+  z-index: 10;
+  padding: 0 1.5rem;
+}
+
+@media (max-width: 992px) {
+  .quoteOverlapWrapper {
+    position: relative;
+    transform: none;
+    margin: 4rem auto -4rem;
+  }
+}
+
 .quoteBlock {
-  max-width: 720px;
-  margin: 0 auto 5rem;
+  max-width: 800px;
+  margin: 0 auto;
   text-align: center;
-  padding: 3rem 2rem;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
+  padding: 3rem 2.5rem;
+  background: rgba(4, 57, 39, 0.9); /* Deep forest green glass */
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-xl);
-  backdrop-filter: var(--glass-blur);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
 .quoteIcon {
   color: var(--accent-green);
   margin-bottom: 1.5rem;
-  opacity: 0.4;
+  opacity: 0.8;
 }
 
 .quoteBlock blockquote {
-  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
   font-weight: 600;
-  color: var(--text-primary);
+  color: white;
   line-height: 1.5;
   letter-spacing: -0.01em;
   font-style: italic;
 }
 
-/* ── About Content ── */
+/* ── Torn Edges ── */
+.tornEdgeTopGreen {
+  width: 100%;
+  height: 60px;
+  background-color: white;
+  clip-path: polygon(0 100%, 100% 100%, 100% 0, 95% 40%, 85% 10%, 75% 50%, 65% 20%, 55% 60%, 45% 10%, 35% 50%, 25% 20%, 15% 60%, 5% 30%, 0 0);
+  transform: rotate(180deg);
+  margin-bottom: -1px;
+}
+
+.tornEdgeBottomWhite {
+  width: 100%;
+  height: 60px;
+  background-color: white;
+  clip-path: polygon(0 100%, 100% 100%, 100% 0, 95% 40%, 85% 10%, 75% 50%, 65% 20%, 55% 60%, 45% 10%, 35% 50%, 25% 20%, 15% 60%, 5% 30%, 0 0);
+  margin-top: -1px;
+  z-index: 5;
+  position: relative;
+}
+
+.tornEdgeBottomDark {
+  width: 100%;
+  height: 60px;
+  background-color: var(--accent-green-deep);
+  clip-path: polygon(0 100%, 100% 100%, 100% 0, 95% 40%, 85% 10%, 75% 50%, 65% 20%, 55% 60%, 45% 10%, 35% 50%, 25% 20%, 15% 60%, 5% 30%, 0 0);
+  transform: rotate(180deg);
+  margin-top: -1px;
+}
+
+.deepGreenWrapper {
+  background-color: var(--accent-green-deep);
+  padding: 0;
+}
+
+/* ── About Content (White) ── */
+.aboutSection {
+  background-color: white;
+  padding: 10rem 0 6rem; /* Top padding to clear floating widget */
+}
+
 .aboutContent {
-  max-width: 720px;
+  max-width: 800px;
   margin: 0 auto;
 }
 
 .aboutText h2 {
   margin-bottom: 2rem;
+  color: var(--bg-primary);
 }
 
 .paragraphs {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  margin-bottom: 2rem;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .paragraphs p {
-  font-size: 1rem;
+  font-size: 1.05rem;
   line-height: 1.8;
+  color: var(--text-secondary);
 }
 
 .aboutBtn {
   margin-top: 0.5rem;
 }
 
-/* ── Outputs ── */
+/* ── Outputs (Deep Green) ── */
 .outputsSection {
-  background: rgba(12, 30, 58, 0.5);
-  backdrop-filter: blur(8px);
-  border-top: 1px solid var(--glass-border);
-  border-bottom: 1px solid var(--glass-border);
+  padding: 3rem 0;
 }
 
 .outputsGrid {
@@ -111,7 +194,17 @@
 }
 
 .outputCard {
-  padding: 2rem;
+  padding: 2.5rem;
+  background: rgba(4, 57, 39, 0.85); /* Deep green glass */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  color: white;
+  transition: transform 0.3s ease;
+}
+
+.outputCard:hover {
+  transform: translateY(-5px);
+  background: rgba(1, 30, 19, 0.95);
 }
 
 .outputIcon {
@@ -122,29 +215,62 @@
 
 .outputCard h3 {
   margin-bottom: 0.75rem;
-  font-size: 1.125rem;
+  font-size: 1.15rem;
+  color: white;
 }
 
 .outputCard p {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
 }
 
-/* ── Projects ── */
+/* ── Projects (White) ── */
+.projectsSection {
+  background-color: white;
+  padding: 6rem 0;
+}
+
+.sectionHeaderWhite {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 3.5rem;
+}
+
+.sectionHeaderWhite h2 {
+  margin-bottom: 1rem;
+  color: var(--bg-primary);
+}
+
+.sectionHeaderWhite p {
+  color: var(--text-secondary);
+}
+
 .projectsList {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  max-width: 800px;
-  margin: 0 auto 3rem;
+  gap: 2.5rem;
+  max-width: 900px;
+  margin: 0 auto 4rem;
 }
 
 .projectCard {
   padding: 2.5rem;
+  background: white;
+  border: 1px solid #E2E8F0;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  transition: all 0.3s ease;
+}
+
+.projectCard:hover {
+  border-color: var(--accent-green);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
 }
 
 .projectHeader {
   margin-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid #E2E8F0;
   padding-bottom: 1.25rem;
 }
 
@@ -174,19 +300,19 @@
 }
 
 .statusOngoing {
-  background: var(--accent-green-muted);
-  color: var(--accent-green);
+  background: #D1FAE5;
+  color: #059669;
 }
 
 .statusUpcoming {
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--text-muted);
-  border: 1px solid var(--glass-border);
+  background: #F1F5F9;
+  color: #64748B;
 }
 
 .projectHeader h3 {
   font-size: clamp(1.25rem, 2.5vw, 1.5rem);
   line-height: 1.35;
+  color: var(--bg-primary);
 }
 
 .projectBody {
@@ -197,39 +323,45 @@
 }
 
 .projectBody p {
-  font-size: 0.95rem;
+  font-size: 1rem;
   line-height: 1.8;
+  color: var(--text-secondary);
 }
 
 .projectFooter {
-  background: rgba(0, 0, 0, 0.15);
+  background: #F8FAFC;
   padding: 1.5rem;
   border-radius: var(--radius-sm);
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  border: 1px solid #E2E8F0;
 }
 
 .footerItem strong {
   display: block;
-  color: var(--text-primary);
+  color: var(--bg-primary);
   margin-bottom: 0.5rem;
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
 
+.footerItem p {
+  color: var(--text-secondary);
+}
+
 .tagList {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
 
 .tag {
   font-size: 0.75rem;
   padding: 0.3rem 0.65rem;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
+  background: white;
+  border: 1px solid #CBD5E1;
   border-radius: 6px;
   color: var(--text-secondary);
   font-weight: 500;
@@ -237,25 +369,26 @@
 
 /* ── NCD Panel ── */
 .ncdPanel {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   text-align: center;
-  background: var(--bg-secondary);
-  border-color: var(--glass-border);
-}
-
-.ncdPanel:hover {
-  transform: none;
+  background: #F0FDF4; /* Very light green */
+  border: 1px solid #BBF7D0;
+  padding: 3rem 2rem;
+  border-radius: var(--radius-lg);
 }
 
 .ncdPanel h3 {
   margin-bottom: 1rem;
+  color: var(--bg-primary);
 }
 
 .ncdPanel p {
   max-width: 600px;
   margin: 0 auto;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
 }
 
 /* ── Section Headers ── */
@@ -269,9 +402,9 @@
   margin-bottom: 1rem;
 }
 
-/* ── CTA ── */
+/* ── CTA (Deep Green) ── */
 .ctaSection {
-  padding-bottom: 2rem;
+  padding: 2rem 0 4rem;
 }
 
 .ctaBox {
@@ -280,11 +413,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: var(--bg-secondary);
-}
-
-.ctaBox:hover {
-  transform: none;
+  background: rgba(1, 30, 19, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-xl);
 }
 
 .ctaBox h2 {
@@ -293,12 +424,13 @@
 
 .ctaBox p {
   max-width: 540px;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
+  font-size: 1.1rem;
 }
 
 .ctaActions {
   display: flex;
-  gap: 0.75rem;
+  gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
 }

@@ -2,8 +2,14 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, Quote, Target, Eye } from 'lucide-react';
+import { Quote, Target, Eye } from 'lucide-react';
+import AnimatedCounter from '../../components/ui/AnimatedCounter';
 import styles from './about.module.css';
+
+const cinematicScale = {
+  hidden: { opacity: 0, scale: 0.95, y: 20 },
+  visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+};
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -21,42 +27,47 @@ const staggerContainer = {
 export default function About() {
   return (
     <div className={styles.aboutWrapper}>
-      {/* HERO SECTION */}
+      {/* ── HERO SECTION ── */}
       <section className={styles.heroSection}>
-        <div className="container">
+        <div className={styles.heroBackground}></div>
+        <div className={styles.heroOverlay}></div>
+        <div className={styles.heroGrid}>
           <motion.div 
             className={styles.heroContent}
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
           >
-            <motion.span variants={fadeUp} className="eyebrow">About Us</motion.span>
+            <motion.span variants={fadeUp} className="eyebrow" style={{ color: 'rgba(255,255,255,0.8)' }}>About Us</motion.span>
             <motion.h1 variants={fadeUp} className={styles.heroTitle}>
-              Building the Research Capacity Africa Needs. <span className="gradient-accent-text">Right Here in Nigeria.</span>
+              Building the Research Capacity Africa Needs.<br />
+              <span className="gradient-accent-text" style={{ background: 'linear-gradient(90deg, #10B981, #3B82F6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Right Here in Nigeria.</span>
             </motion.h1>
             <motion.p variants={fadeUp} className={styles.heroSubtitle}>
               The EPIX Initiative is a Nigerian research and development organization founded in 2025. We train the next generation of African health researchers and build digital health tools designed for the communities that need them most.
             </motion.p>
           </motion.div>
         </div>
-      </section>
 
-      {/* WHO WE ARE */}
-      <section className="section">
-        <div className="container">
+        {/* ── QUOTE OVERLAP ── */}
+        <div className={styles.quoteOverlapWrapper}>
           <motion.div 
-            className={styles.quoteBlock}
+            className={styles.quoteBox}
             initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
+            animate="visible"
+            variants={cinematicScale}
           >
-            <Quote size={48} className={styles.quoteIcon} />
+            <Quote size={40} className={styles.quoteIcon} />
             <blockquote>
               "Nigeria does not have a talent problem. It has an infrastructure problem. We are building the infrastructure."
             </blockquote>
           </motion.div>
+        </div>
+      </section>
 
+      {/* ── STORY SECTION (White) ── */}
+      <section className={styles.storySection}>
+        <div className="container">
           <motion.div 
             className={styles.storyContent}
             initial="hidden"
@@ -77,45 +88,52 @@ export default function About() {
         </div>
       </section>
 
-      {/* MISSION AND VISION */}
-      <section className={`section ${styles.directionSection}`}>
-        <div className="container">
-          <motion.div 
-            className={styles.sectionHeader}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-          >
-            <span className="eyebrow">Our Direction</span>
-          </motion.div>
-
-          <motion.div 
-            className={styles.directionGrid}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-          >
-            <motion.div variants={fadeUp} className={`glass-card ${styles.directionCard}`}>
-              <Target size={32} className={styles.cardIcon} />
-              <span className={styles.cardLabel}>Our Mission</span>
-              <h3>What We Do</h3>
-              <p>To train the next generation of African health researchers with the practical skills to generate evidence, lead studies, and develop solutions that work in Africa.</p>
+      {/* ── MISSION & VISION (Deep Green) ── */}
+      <div className={styles.deepGreenWrapper}>
+        <div className={styles.tornEdgeTopGreen}></div>
+        
+        <section className={styles.directionSection}>
+          <div className="container">
+            <motion.div 
+              className={styles.sectionHeader}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+            >
+              <span className="eyebrow" style={{ color: 'rgba(255,255,255,0.8)' }}>Our Direction</span>
             </motion.div>
-            <motion.div variants={fadeUp} className={`glass-card ${styles.directionCard}`}>
-              <Eye size={32} className={styles.cardIcon} />
-              <span className={styles.cardLabel}>Our Vision</span>
-              <h3>Where We Are Going</h3>
-              <p>A continent where health solutions are researched, designed, and implemented by Africans using African data to solve African problems.</p>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
 
-      {/* THE PROBLEM */}
-      <section className="section">
+            <motion.div 
+              className={styles.directionGrid}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={staggerContainer}
+            >
+              <motion.div variants={fadeUp} className={styles.directionCard}>
+                <Target size={32} className={styles.cardIcon} />
+                <span className={styles.cardLabel}>Our Mission</span>
+                <h3>What We Do</h3>
+                <p>To train the next generation of African health researchers with the practical skills to generate evidence, lead studies, and develop solutions that work in Africa.</p>
+              </motion.div>
+              <motion.div variants={fadeUp} className={styles.directionCard}>
+                <Eye size={32} className={styles.cardIcon} />
+                <span className={styles.cardLabel}>Our Vision</span>
+                <h3>Where We Are Going</h3>
+                <p>A continent where health solutions are researched, designed, and implemented by Africans using African data to solve African problems.</p>
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
+        <div className={styles.tornEdgeBottomWhite}></div>
+      </div>
+
+      {/* ── THE PROBLEM & VALUES (White) ── */}
+      <section className={styles.problemValuesSection}>
         <div className="container">
+          {/* The Problem */}
           <motion.div 
             className={styles.problemWrapper}
             initial="hidden"
@@ -131,15 +149,15 @@ export default function About() {
             <div className={styles.problemContent}>
               <motion.div variants={fadeUp} className={styles.problemStats}>
                 <div className={styles.pStat}>
-                  <span className={styles.pStatNum}>24%</span>
+                  <span className={styles.pStatNum}><AnimatedCounter value={24} />%</span>
                   <p>of the global disease burden is carried by Africa. Less than 2% of global health research comes from the continent.</p>
                 </div>
                 <div className={styles.pStat}>
-                  <span className={styles.pStatNum}>40%</span>
+                  <span className={styles.pStatNum}><AnimatedCounter value={40} />%</span>
                   <p>of Nigerians have reliable access to basic healthcare. The majority of health records in this country are still paper based.</p>
                 </div>
                 <div className={styles.pStat}>
-                  <span className={styles.pStatNum}>60%</span>
+                  <span className={styles.pStatNum}><AnimatedCounter value={60} />%</span>
                   <p>of Nigeria's population is under 25. Adolescents remain largely invisible in health research, policy, and digital health systems.</p>
                 </div>
               </motion.div>
@@ -151,115 +169,109 @@ export default function About() {
               </motion.div>
             </div>
           </motion.div>
-        </div>
-      </section>
 
-      {/* OUR VALUES */}
-      <section className={`section ${styles.valuesSection}`}>
-        <div className="container">
+          {/* Our Values */}
           <motion.div 
-            className={styles.sectionHeader}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-          >
-            <span className="eyebrow">What We Stand For</span>
-            <h2>How We Work</h2>
-          </motion.div>
-
-          <motion.div 
-            className={styles.valuesList}
+            className={styles.valuesWrapper}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={staggerContainer}
           >
-            {[
-              { num: '01', title: 'Excellence', body: 'Scientific rigor is not negotiable. From how we design a study to how we teach a module, we hold ourselves to standards that reflect what we believe African health research should look like globally.' },
-              { num: '02', title: 'Impact', body: 'We measure ourselves by what changes, not what we publish. Every project we run starts with a clear answer to one question: who will this actually help and how?' },
-              { num: '03', title: 'Collaboration', body: 'No single organization closes a gap this large alone. We build with partners, mentors, universities, and institutions who share the conviction that African health evidence should be generated by Africans.' }
-            ].map((val, index) => (
-              <motion.div key={index} variants={fadeUp} className={styles.valueItem}>
-                <span className={styles.valueNum}>{val.num}</span>
-                <div className={styles.valueText}>
-                  <h3>{val.title}</h3>
-                  <p>{val.body}</p>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+            <motion.div variants={fadeUp} className={styles.sectionHeader}>
+              <span className="eyebrow">What We Stand For</span>
+              <h2>How We Work</h2>
+            </motion.div>
 
-      {/* OUR TEAM */}
-      <section className="section">
-        <div className="container">
-          <motion.div 
-            className={styles.sectionHeader}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-          >
-            <span className="eyebrow">Our People</span>
-            <h2>Who We Are</h2>
-            <p>A team of Nigerian health researchers and educators building the infrastructure Africa needs from the inside.</p>
-          </motion.div>
-
-          <motion.div 
-            className={styles.teamGrid}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-          >
-            <motion.div variants={fadeUp} className={`glass-card ${styles.teamMember}`}>
-              <div className={styles.memberPhoto}></div>
-              <h3>[Founder Name]</h3>
-              <span className={styles.memberRole}>Founder and Executive Director</span>
-              <p className={styles.memberBio}>As a public health professional, I saw firsthand the gap between academic theory and practical community impact. I founded EPIX to ensure young African researchers are equipped with the skills and digital tools needed to transform our healthcare systems from the ground up.</p>
-            </motion.div>
-            {/* Add more team members easily here */}
-            <motion.div variants={fadeUp} className={`glass-card ${styles.teamMember}`}>
-              <div className={styles.memberPhoto}></div>
-              <h3>[Team Member]</h3>
-              <span className={styles.memberRole}>[Role]</span>
-            </motion.div>
-            <motion.div variants={fadeUp} className={`glass-card ${styles.teamMember}`}>
-              <div className={styles.memberPhoto}></div>
-              <h3>[Team Member]</h3>
-              <span className={styles.memberRole}>[Role]</span>
-            </motion.div>
-            <motion.div variants={fadeUp} className={`glass-card ${styles.teamMember}`}>
-              <div className={styles.memberPhoto}></div>
-              <h3>[Team Member]</h3>
-              <span className={styles.memberRole}>[Role]</span>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* FINAL CTA */}
-      <section className={`section ${styles.ctaSection}`}>
-        <div className="container">
-          <motion.div 
-            className={`glass-card ${styles.ctaBox}`}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-          >
-            <h2>Ready to Be Part of What We Are Building?</h2>
-            <p>Whether you want to learn, collaborate, partner, or invest in African-led research, there is a place for you here.</p>
-            <div className={styles.ctaActions}>
-              <Link href="/programs" className="btn-primary">Join The Academy</Link>
-              <Link href="/get-involved" className="btn-secondary">Partner With Us</Link>
-              <Link href="/get-involved" className="btn-secondary">Support Our Work</Link>
+            <div className={styles.valuesList}>
+              {[
+                { num: '01', title: 'Excellence', body: 'Scientific rigor is not negotiable. From how we design a study to how we teach a module, we hold ourselves to standards that reflect what we believe African health research should look like globally.' },
+                { num: '02', title: 'Impact', body: 'We measure ourselves by what changes, not what we publish. Every project we run starts with a clear answer to one question: who will this actually help and how?' },
+                { num: '03', title: 'Collaboration', body: 'No single organization closes a gap this large alone. We build with partners, mentors, universities, and institutions who share the conviction that African health evidence should be generated by Africans.' }
+              ].map((val, index) => (
+                <motion.div key={index} variants={fadeUp} className={styles.valueItem}>
+                  <span className={styles.valueNum}>{val.num}</span>
+                  <div className={styles.valueText}>
+                    <h3>{val.title}</h3>
+                    <p>{val.body}</p>
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </motion.div>
         </div>
       </section>
+
+      {/* ── TEAM & CTA (Deep Green) ── */}
+      <div className={styles.deepGreenWrapper}>
+        <div className={styles.tornEdgeTopGreen}></div>
+        
+        <section className={styles.teamSection}>
+          <div className="container">
+            <motion.div 
+              className={styles.sectionHeader}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+            >
+              <span className="eyebrow" style={{ color: 'rgba(255,255,255,0.8)' }}>Our People</span>
+              <h2 style={{ color: 'white' }}>Who We Are</h2>
+              <p style={{ color: 'rgba(255,255,255,0.9)' }}>A team of Nigerian health researchers and educators building the infrastructure Africa needs from the inside.</p>
+            </motion.div>
+
+            <motion.div 
+              className={styles.teamGrid}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={staggerContainer}
+            >
+              <motion.div variants={fadeUp} className={styles.teamMember}>
+                <div className={styles.memberPhoto} style={{ backgroundImage: "url('/images/team_member_1.png')" }}></div>
+                <h3 style={{ color: 'white' }}>Dr. A. O.</h3>
+                <span className={styles.memberRole}>Founder and Executive Director</span>
+                <p className={styles.memberBio}>As a public health professional, I saw firsthand the gap between academic theory and practical community impact. I founded EPIX to ensure young African researchers are equipped with the skills and digital tools needed to transform our healthcare systems from the ground up.</p>
+              </motion.div>
+              <motion.div variants={fadeUp} className={styles.teamMember}>
+                <div className={styles.memberPhotoPlaceholder}></div>
+                <h3 style={{ color: 'white' }}>[Team Member]</h3>
+                <span className={styles.memberRole}>Lead Researcher</span>
+                <p className={styles.memberBio}>Driving our community-based research initiatives with a focus on non-communicable diseases.</p>
+              </motion.div>
+              <motion.div variants={fadeUp} className={styles.teamMember}>
+                <div className={styles.memberPhotoPlaceholder}></div>
+                <h3 style={{ color: 'white' }}>[Team Member]</h3>
+                <span className={styles.memberRole}>Digital Health Specialist</span>
+                <p className={styles.memberBio}>Designing localized digital tools that empower our communities and research teams.</p>
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className={styles.ctaSection}>
+          <div className="container">
+            <motion.div 
+              className={styles.ctaBox}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+            >
+              <h2 style={{ color: 'white' }}>Ready to Be Part of What We Are Building?</h2>
+              <p style={{ color: 'rgba(255,255,255,0.9)' }}>Whether you want to learn, collaborate, partner, or invest in African-led research, there is a place for you here.</p>
+              <div className={styles.ctaActions}>
+                <Link href="/programs" className="btn-primary">Join The Academy</Link>
+                <Link href="/get-involved" className="btn-secondary" style={{ backgroundColor: 'white', color: 'var(--bg-primary)' }}>Partner With Us</Link>
+                <Link href="/get-involved" className="btn-secondary" style={{ backgroundColor: 'transparent', color: 'white', borderColor: 'rgba(255,255,255,0.2)' }}>Support Our Work</Link>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        <div className={styles.tornEdgeBottomDark}></div>
+      </div>
     </div>
   );
 }

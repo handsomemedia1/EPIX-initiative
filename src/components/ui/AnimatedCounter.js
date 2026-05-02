@@ -8,8 +8,9 @@ export default function AnimatedCounter({ value, direction = "up", duration = 2.
   const inView = useInView(ref, { once: true, margin: "-100px" });
   
   // Extract number and suffix (like "50+")
-  const numericValue = parseInt(value.replace(/[^0-9]/g, ""));
-  const suffix = value.replace(/[0-9]/g, "");
+  const stringValue = value.toString();
+  const numericValue = parseInt(stringValue.replace(/[^0-9]/g, ""));
+  const suffix = stringValue.replace(/[0-9]/g, "");
 
   const motionValue = useMotionValue(direction === "down" ? numericValue * 2 : 0);
   const springValue = useSpring(motionValue, {

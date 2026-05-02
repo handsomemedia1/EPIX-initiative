@@ -29,16 +29,19 @@ export default function Blog() {
 
   return (
     <div className={styles.blogWrapper}>
-      {/* HERO SECTION */}
+      {/* ── HERO SECTION ── */}
       <section className={styles.heroSection}>
-        <div className="container">
+        <div className={styles.heroBackground}></div>
+        <div className={styles.heroOverlay}></div>
+
+        <div className="container" style={{ position: 'relative', zIndex: 2 }}>
           <motion.div 
             className={styles.heroContent}
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
           >
-            <motion.span variants={fadeUp} className="eyebrow">EPIX Initiative</motion.span>
+            <motion.span variants={fadeUp} className="eyebrow" style={{ color: 'rgba(255,255,255,0.8)' }}>EPIX Initiative</motion.span>
             <motion.h1 variants={fadeUp} className={styles.heroTitle}>Latest From EPIX</motion.h1>
             <motion.p variants={fadeUp} className={styles.heroBody}>
               Research updates, program news, and perspectives on digital health in Africa from the EPIX team.
@@ -47,8 +50,8 @@ export default function Blog() {
         </div>
       </section>
 
-      {/* DYNAMIC POSTS OR EMPTY STATE */}
-      <section className="section">
+      {/* ── DYNAMIC POSTS OR EMPTY STATE (White Section) ── */}
+      <section className={styles.postsSection}>
         <div className="container">
           {posts.length > 0 ? (
             <motion.div 
@@ -58,7 +61,7 @@ export default function Blog() {
               variants={staggerContainer}
             >
               {posts.map((post, i) => (
-                <motion.article key={i} variants={fadeUp} className={`glass-card ${styles.postCard}`}>
+                <motion.article key={i} variants={fadeUp} className={styles.postCard}>
                   <div className={styles.postMeta}>
                     <span className={styles.postCategory}>{post.category}</span>
                     <span className={styles.postDate}>{new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
@@ -73,7 +76,7 @@ export default function Blog() {
             </motion.div>
           ) : (
             <motion.div 
-              className={`glass-card ${styles.emptyState}`}
+              className={styles.emptyState}
               initial="hidden"
               animate="visible"
               variants={fadeUp}
@@ -95,47 +98,53 @@ export default function Blog() {
         </div>
       </section>
 
-      {/* WHAT TO EXPECT */}
-      <section className={`section ${styles.expectSection}`}>
-        <div className="container">
-          <motion.div 
-            className={styles.sectionHeader}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-          >
-            <span className="eyebrow">Coming Soon</span>
-            <h2>What We Will Write About</h2>
-          </motion.div>
-
-          <motion.div 
-            className={styles.expectGrid}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-          >
-            <motion.div variants={fadeUp} className={styles.expectItem}>
-              <BookOpen size={32} className={styles.expectIcon} />
-              <h3>Research Insights</h3>
-              <p>Updates from the EPIX Research Lab including findings, reflections from the field, and perspectives on what rigorous digital health research looks like in the Nigerian context.</p>
-            </motion.div>
-            
-            <motion.div variants={fadeUp} className={styles.expectItem}>
-              <GraduationCap size={32} className={styles.expectIcon} />
-              <h3>Academy Updates</h3>
-              <p>Stories from our training cohorts, what participants are learning, and the journey from student to published researcher.</p>
+      {/* ── WHAT TO EXPECT (Deep Green Section) ── */}
+      <div className={styles.deepGreenWrapper}>
+        <div className={styles.tornEdgeTopGreen}></div>
+        
+        <section className={styles.expectSection}>
+          <div className="container">
+            <motion.div 
+              className={styles.sectionHeader}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+            >
+              <span className="eyebrow" style={{ color: 'rgba(255,255,255,0.8)' }}>Coming Soon</span>
+              <h2 style={{ color: 'white' }}>What We Will Write About</h2>
             </motion.div>
 
-            <motion.div variants={fadeUp} className={styles.expectItem}>
-              <Globe2 size={32} className={styles.expectIcon} />
-              <h3>African Health Perspectives</h3>
-              <p>Commentary on African public health, digital health innovation, and what it will take to shift Africa from research consumer to research producer.</p>
+            <motion.div 
+              className={styles.expectGrid}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={staggerContainer}
+            >
+              <motion.div variants={fadeUp} className={styles.expectItem}>
+                <BookOpen size={32} className={styles.expectIcon} />
+                <h3>Research Insights</h3>
+                <p>Updates from the EPIX Research Lab including findings, reflections from the field, and perspectives on what rigorous digital health research looks like in the Nigerian context.</p>
+              </motion.div>
+              
+              <motion.div variants={fadeUp} className={styles.expectItem}>
+                <GraduationCap size={32} className={styles.expectIcon} />
+                <h3>Academy Updates</h3>
+                <p>Stories from our training cohorts, what participants are learning, and the journey from student to published researcher.</p>
+              </motion.div>
+
+              <motion.div variants={fadeUp} className={styles.expectItem}>
+                <Globe2 size={32} className={styles.expectIcon} />
+                <h3>African Health Perspectives</h3>
+                <p>Commentary on African public health, digital health innovation, and what it will take to shift Africa from research consumer to research producer.</p>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        </div>
-      </section>
+          </div>
+        </section>
+        
+        <div className={styles.tornEdgeBottomDark}></div>
+      </div>
     </div>
   );
 }

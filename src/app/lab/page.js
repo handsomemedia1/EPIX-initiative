@@ -2,10 +2,15 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, Quote, FileText, Database, ShieldAlert, Monitor, Beaker } from 'lucide-react';
+import { Quote, FileText, Database, ShieldAlert, Monitor, Beaker } from 'lucide-react';
 import styles from './lab.module.css';
 import { getProjects } from '@/lib/projects';
 import { useEffect, useState } from 'react';
+
+const cinematicScale = {
+  hidden: { opacity: 0, scale: 0.95, y: 20 },
+  visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+};
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -29,41 +34,46 @@ export default function Lab() {
 
   return (
     <div className={styles.labWrapper}>
-      {/* HERO SECTION */}
+      {/* ── HERO SECTION ── */}
       <section className={styles.heroSection}>
-        <div className="container">
+        <div className={styles.heroBackground}></div>
+        <div className={styles.heroOverlay}></div>
+        
+        <div className="container" style={{ position: 'relative', zIndex: 2 }}>
           <motion.div 
             className={styles.heroContent}
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
           >
-            <motion.span variants={fadeUp} className="eyebrow">Research and Development</motion.span>
+            <motion.span variants={fadeUp} className="eyebrow" style={{ color: 'rgba(255,255,255,0.8)' }}>Research and Development</motion.span>
             <motion.h1 variants={fadeUp} className={styles.heroTitle}>EPIX Research Lab</motion.h1>
-            <motion.p variants={fadeUp} className={styles.subTitle}>Where African Evidence Gets Made</motion.p>
+            <motion.p variants={fadeUp} className={styles.subTitle} style={{ color: 'var(--accent-green)' }}>Where African Evidence Gets Made</motion.p>
             <motion.p variants={fadeUp} className={styles.heroBody}>
               We design and conduct community-based health studies, produce peer-reviewed publications, and develop digital health tools built from what our research actually finds.
             </motion.p>
           </motion.div>
         </div>
-      </section>
 
-      {/* ABOUT THE LAB */}
-      <section className="section">
-        <div className="container">
+        {/* ── QUOTE OVERLAP ── */}
+        <div className={styles.quoteOverlapWrapper}>
           <motion.div 
             className={styles.quoteBlock}
             initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
+            animate="visible"
+            variants={cinematicScale}
           >
             <Quote size={48} className={styles.quoteIcon} />
             <blockquote>
               "We identify the gap. We research it. We build the solution. We test it in the community it was built for."
             </blockquote>
           </motion.div>
+        </div>
+      </section>
 
+      {/* ── ABOUT THE LAB (White Section) ── */}
+      <section className={styles.aboutSection}>
+        <div className="container">
           <motion.div 
             className={styles.aboutContent}
             initial="hidden"
@@ -84,54 +94,60 @@ export default function Lab() {
         </div>
       </section>
 
-      {/* WHAT WE PRODUCE */}
-      <section className={`section ${styles.outputsSection}`}>
+      {/* ── WHAT WE PRODUCE (Deep Green Section) ── */}
+      <div className={styles.deepGreenWrapper}>
+        <div className={styles.tornEdgeTopGreen}></div>
+        
+        <section className={styles.outputsSection}>
+          <div className="container">
+            <motion.div 
+              className={styles.sectionHeader}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+            >
+              <span className="eyebrow" style={{ color: 'rgba(255,255,255,0.8)' }}>Lab Outputs</span>
+              <h2 style={{ color: 'white' }}>What We Produce</h2>
+              <p style={{ color: 'rgba(255,255,255,0.9)' }}>Every project produces at least one publishable or deployable output.</p>
+            </motion.div>
+
+            <motion.div 
+              className={styles.outputsGrid}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={staggerContainer}
+            >
+              {[
+                { icon: FileText, title: 'Peer-Reviewed Publications', body: 'Original research articles, short communications, and case studies submitted to indexed journals. We publish open access wherever possible.' },
+                { icon: Database, title: 'Policy Briefs', body: 'Evidence translated into clear documents for policymakers, health program managers, and government agencies.' },
+                { icon: ShieldAlert, title: 'Working Papers', body: 'Technical research outputs shared with the global health community to advance the evidence base on digital health in Nigeria.' },
+                { icon: Monitor, title: 'Digital Health Tools', body: 'Applications, screening tools, and intervention frameworks built specifically for the Nigerian context from the ground up.' },
+                { icon: FileText, title: 'Open Access Resources', body: 'Research instruments, questionnaires, and datasets made freely available to the African research community.' },
+                { icon: Beaker, title: 'Research Collaborations', body: 'Joint studies with Nigerian universities, international institutions, and public health organizations working on African health challenges.' }
+              ].map((output, i) => {
+                const Icon = output.icon;
+                return (
+                  <motion.div key={i} variants={fadeUp} className={styles.outputCard}>
+                    <Icon size={32} className={styles.outputIcon} />
+                    <h3>{output.title}</h3>
+                    <p>{output.body}</p>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          </div>
+        </section>
+
+        <div className={styles.tornEdgeBottomWhite}></div>
+      </div>
+
+      {/* ── OUR PROJECTS (White Section) ── */}
+      <section className={styles.projectsSection}>
         <div className="container">
           <motion.div 
-            className={styles.sectionHeader}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-          >
-            <span className="eyebrow">Lab Outputs</span>
-            <h2>What We Produce</h2>
-            <p>Every project produces at least one publishable or deployable output.</p>
-          </motion.div>
-
-          <motion.div 
-            className={styles.outputsGrid}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-          >
-            {[
-              { icon: FileText, title: 'Peer-Reviewed Publications', body: 'Original research articles, short communications, and case studies submitted to indexed journals. We publish open access wherever possible.' },
-              { icon: Database, title: 'Policy Briefs', body: 'Evidence translated into clear documents for policymakers, health program managers, and government agencies.' },
-              { icon: ShieldAlert, title: 'Working Papers', body: 'Technical research outputs shared with the global health community to advance the evidence base on digital health in Nigeria.' },
-              { icon: Monitor, title: 'Digital Health Tools', body: 'Applications, screening tools, and intervention frameworks built specifically for the Nigerian context from the ground up.' },
-              { icon: FileText, title: 'Open Access Resources', body: 'Research instruments, questionnaires, and datasets made freely available to the African research community.' },
-              { icon: Beaker, title: 'Research Collaborations', body: 'Joint studies with Nigerian universities, international institutions, and public health organizations working on African health challenges.' }
-            ].map((output, i) => {
-              const Icon = output.icon;
-              return (
-                <motion.div key={i} variants={fadeUp} className={`glass-card ${styles.outputCard}`}>
-                  <Icon size={32} className={styles.outputIcon} />
-                  <h3>{output.title}</h3>
-                  <p>{output.body}</p>
-                </motion.div>
-              );
-            })}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* OUR PROJECTS (DYNAMIC) */}
-      <section className="section">
-        <div className="container">
-          <motion.div 
-            className={styles.sectionHeader}
+            className={styles.sectionHeaderWhite}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -146,7 +162,7 @@ export default function Lab() {
             {projects.map((project, index) => (
               <motion.div 
                 key={project.id} 
-                className={`glass-card ${styles.projectCard}`}
+                className={styles.projectCard}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: "-50px" }}
@@ -186,7 +202,7 @@ export default function Lab() {
 
           {/* NCD PANEL */}
           <motion.div 
-            className={`glass-card ${styles.ncdPanel}`}
+            className={styles.ncdPanel}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -195,30 +211,36 @@ export default function Lab() {
             <span className="eyebrow">Coming Soon</span>
             <h3>Non-Communicable Diseases Research Program</h3>
             <p>Our NCD research program is in development. We are designing studies that use digital health tools and community-based surveillance approaches to address the rising burden of hypertension, diabetes, and other non-communicable conditions in Nigerian communities. Updates will be posted here and on our blog.</p>
-            <Link href="/blog" className="btn-secondary" style={{ marginTop: '1.5rem' }}>Get Notified</Link>
+            <Link href="/blog" className="btn-secondary" style={{ marginTop: '1.5rem', backgroundColor: 'transparent', borderColor: 'var(--accent-green)', color: 'var(--accent-green)' }}>Get Notified</Link>
           </motion.div>
         </div>
       </section>
 
-      {/* FINAL CTA */}
-      <section className={`section ${styles.ctaSection}`}>
-        <div className="container">
-          <motion.div 
-            className={`glass-card ${styles.ctaBox}`}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUp}
-          >
-            <h2>Work With Us</h2>
-            <p>We are looking for research partners, co-investigators, institutional collaborators, and field partners. If you believe in African-led evidence, we want to hear from you.</p>
-            <div className={styles.ctaActions}>
-              <Link href="/get-involved" className="btn-primary">Get In Touch</Link>
-              <Link href="/get-involved" className="btn-secondary">Become a Partner</Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      {/* ── FINAL CTA (Deep Green Section) ── */}
+      <div className={styles.deepGreenWrapper}>
+        <div className={styles.tornEdgeTopGreen}></div>
+        
+        <section className={styles.ctaSection}>
+          <div className="container">
+            <motion.div 
+              className={styles.ctaBox}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUp}
+            >
+              <h2 style={{ color: 'white' }}>Work With Us</h2>
+              <p style={{ color: 'rgba(255,255,255,0.9)' }}>We are looking for research partners, co-investigators, institutional collaborators, and field partners. If you believe in African-led evidence, we want to hear from you.</p>
+              <div className={styles.ctaActions}>
+                <Link href="/get-involved" className="btn-primary">Get In Touch</Link>
+                <Link href="/get-involved" className="btn-secondary" style={{ backgroundColor: 'transparent', color: 'white', borderColor: 'rgba(255,255,255,0.2)' }}>Become a Partner</Link>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+        
+        <div className={styles.tornEdgeBottomDark}></div>
+      </div>
     </div>
   );
 }
