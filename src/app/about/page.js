@@ -75,22 +75,13 @@ export default function About() {
             viewport={{ once: true }}
             variants={staggerContainer}
           >
-            <motion.div variants={fadeUp} className={styles.storyImageWrapper}>
-              <div className={styles.storyGraphic}>
-                <div style={{ position: 'absolute', bottom: '2rem', left: '2rem', right: '2rem' }}>
-                  <span className="eyebrow" style={{ marginBottom: '0.5rem' }}>EPIX History</span>
-                  <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Established 2025. Focused on locally generated evidence for the Nigerian context.</p>
-                </div>
-              </div>
-            </motion.div>
-
             <motion.div variants={fadeUp} className={styles.storyText}>
               <span className="eyebrow">Our Story</span>
               <h2>Why We Started</h2>
               <div className={styles.paragraphs}>
-                <p>Nigeria has over <span className={styles.highlight}>200 million people</span>, yet less than 40% have reliable access to basic healthcare. Health decisions are made every day without data, without digital tools, and without locally generated evidence. The tools that exist were mostly designed in other countries for other contexts, and <span className={styles.highlight}>they often fail to work here</span> as intended.</p>
-                <p>At the same time, Africa produces <span className={styles.highlight}>less than 2%</span> of global health research despite carrying over 24% of the global disease burden. Brilliant young Nigerians graduate with theoretical knowledge but lack the practical skills to design studies, collect quality data, or lead research that matters.</p>
-                <p>EPIX Initiative was founded in 2025 because both problems have the same solution: <span className={styles.highlight}>Train researchers who understand the Nigerian context</span>. Give them practical skills. Point them at the digital health problems that matter most. Let them build solutions that actually fit.</p>
+                <p>Nigeria has over 200 million people. Less than 40% have reliable access to basic healthcare. Health decisions are made every day without data, without digital tools, and without locally generated evidence. The digital health tools that exist were mostly designed in other countries for other contexts. Most of them do not work here the way they were intended to.</p>
+                <p>At the same time, Africa produces less than 2% of global health research despite carrying over 24% of the global disease burden. Brilliant young Nigerians are graduating from public health programs every year with theoretical knowledge and almost no practical skills. They cannot design a study, collect quality data, or write a manuscript. They enter a field that desperately needs researchers and find themselves unequipped to do the research.</p>
+                <p>EPIX Initiative was founded in 2025 because both problems have the same solution. Train researchers who understand the Nigerian context. Give them practical skills. Point them at the digital health problems that matter most. Let them build solutions that actually fit.</p>
               </div>
             </motion.div>
           </motion.div>
